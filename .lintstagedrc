@@ -1,0 +1,7 @@
+{
+    "*.{js,ts}": [
+      "prettier --write --ignore-unknown",
+      "eslint --fix",
+      "jest --bail --coverage=false --findRelatedTests"
+    ]
+  }
