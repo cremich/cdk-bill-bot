@@ -78,7 +78,6 @@ import { CUR } from "@cremich/cur";
 new CostAndUsageReport(this, "cur", {
   compression: Compression.PARQUET,
   format: Format.PARQUET,
-  name: "bill-bot",
   timeUnit: TimeUnit.DAILY,
 });
 ```
@@ -94,7 +93,6 @@ new CostAndUsageReport(this, "cur", {
   bucket: curBucket,
   compression: Compression.PARQUET,
   format: Format.PARQUET,
-  name: "bill-bot",
   timeUnit: TimeUnit.DAILY,
 });
 ```

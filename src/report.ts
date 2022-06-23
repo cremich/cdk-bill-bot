@@ -1,4 +1,4 @@
-import { aws_cur as cur } from "aws-cdk-lib";
+import { aws_cur as cur, Names, Stack } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { CURBucket } from "./bucket";
 
@@ -81,7 +81,6 @@ export interface CostAndUsageReportProps {
   readonly compression: Compression;
   readonly format: Format;
   readonly refreshClosedReports?: boolean;
-  readonly name: string;
   readonly versioning?: Versioning;
   readonly timeUnit: TimeUnit;
 }
@@ -108,12 +107,12 @@ export class CostAndUsageReport extends Construct {
       refreshClosedReports: props.refreshClosedReports
         ? props.refreshClosedReports
         : false,
-      reportName: props.name,
+      reportName: Names.uniqueId(this),
       reportVersioning: props.versioning
         ? props.versioning.toString()
         : Versioning.OVERWRITE_REPORT,
       s3Bucket: this.bucket.bucketName,
-      s3Prefix: "cur",
+      s3Prefix: `${Stack.of(this).account}-cur`,
       s3Region: this.bucket.region,
       timeUnit: props.timeUnit.toString(),
     });
