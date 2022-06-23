@@ -14,6 +14,12 @@ export interface CostAndUsageDataCatalogProps {
   readonly curBucket: s3.IBucket;
 }
 
+/**
+ * A new cost and usage data catalog containing
+ * - an AWS Glue crawler
+ * - an Amazon Athena workgroup to query data
+ * - an S3 Bucket where Amazon Athena can write the results into.
+ */
 export class CostAndUsageDataCatalog extends Construct {
   /**
    * The bucket where AWS delivers the report

@@ -4,6 +4,8 @@
 
 ### CostAndUsageDataCatalog <a name="CostAndUsageDataCatalog" id="@cremich/cdk-bill-bot.CostAndUsageDataCatalog"></a>
 
+A new cost and usage data catalog containing - an AWS Glue crawler - an Amazon Athena workgroup to query data - an S3 Bucket where Amazon Athena can write the results into.
+
 #### Initializers <a name="Initializers" id="@cremich/cdk-bill-bot.CostAndUsageDataCatalog.Initializer"></a>
 
 ```typescript
@@ -169,6 +171,8 @@ The bucket where AWS delivers the report.
 
 ### CostAndUsageReport <a name="CostAndUsageReport" id="@cremich/cdk-bill-bot.CostAndUsageReport"></a>
 
+A new AWS cost and usage report.
+
 #### Initializers <a name="Initializers" id="@cremich/cdk-bill-bot.CostAndUsageReport.Initializer"></a>
 
 ```typescript
@@ -208,6 +212,7 @@ new CostAndUsageReport(scope: Construct, id: string, props: CostAndUsageReportPr
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageReport.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#@cremich/cdk-bill-bot.CostAndUsageReport.addDataCatalog">addDataCatalog</a></code> | Creates a new data catalog within AWS Glue to crawl and analyze data for this report. |
 
 ---
 
@@ -218,6 +223,14 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `addDataCatalog` <a name="addDataCatalog" id="@cremich/cdk-bill-bot.CostAndUsageReport.addDataCatalog"></a>
+
+```typescript
+public addDataCatalog(): CostAndUsageDataCatalog
+```
+
+Creates a new data catalog within AWS Glue to crawl and analyze data for this report.
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 

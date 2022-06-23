@@ -1,6 +1,7 @@
 import { aws_cur as cur, Names, Stack } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { CURBucket } from "./bucket";
+import { CostAndUsageDataCatalog } from "./datacatalog";
 
 /**
  * The compression format that AWS uses for the report.
@@ -85,6 +86,9 @@ export interface CostAndUsageReportProps {
   readonly timeUnit: TimeUnit;
 }
 
+/**
+ * A new AWS cost and usage report
+ */
 export class CostAndUsageReport extends Construct {
   /**
    * The bucket where AWS delivers the report
@@ -118,5 +122,15 @@ export class CostAndUsageReport extends Construct {
     });
 
     this.name = report.ref;
+  }
+
+  /**
+   * Creates a new data catalog within AWS Glue to crawl and analyze data for this report.
+   * @return a new set of created data catalog resources
+   */
+  public addDataCatalog(): CostAndUsageDataCatalog {
+    return new CostAndUsageDataCatalog(this, "catalog", {
+      curBucket: this.bucket,
+    });
   }
 }

@@ -73,7 +73,7 @@ In order to receive cost and usage reports, you must have an Amazon S3 bucket in
 > ⚠️ Please keep in mind, that cost and usage reports are only supported in `us-east-1`. The implicit created Bucket will then also be created in `us-east-1` and defaults to the current stack's region.
 
 ```javascript
-import { CUR } from "@cremich/cur";
+import { CostAndUsageReport } from "@cremich/cdk-bill-bo";
 
 new CostAndUsageReport(this, "cur", {
   compression: Compression.PARQUET,
@@ -85,7 +85,7 @@ new CostAndUsageReport(this, "cur", {
 If you want to provision a custom Amazon S3 bucket, you can use the `CURBucket` construct and provide a reference to this bucket to the `CUR` construct. This gives you the flexibility, to provision the Amazon S3 bucket in another region while keeping the report provisioned in `us-east-1`
 
 ```javascript
-import { CUR, CURBucket } from "@cremich/cur";
+import { CostAndUsageReport, CURBucket } from "@cremich/cdk-bill-bo";
 
 const curBucket = new CURBucket(this, "bucket");
 
@@ -94,6 +94,36 @@ new CostAndUsageReport(this, "cur", {
   compression: Compression.PARQUET,
   format: Format.PARQUET,
   timeUnit: TimeUnit.DAILY,
+});
+```
+
+### Use AWS Glue to enable access to your report using Amazon Athena
+
+After you created your report, you can provision a AWS Glue based data catalog for this. This enables Bill and you to analyze your cost and usage reports using Amazon Athena.
+
+If you want to enable a data catalog on a new provisioned report, you can simply call `addDataCatalog()` on your `CostAndUsageReport` construct like
+
+```javascript
+import { CostAndUsageReport } from "@cremich/cdk-bill-bo";
+
+const report = new CostAndUsageReport(this, "cur", {
+  compression: Compression.PARQUET,
+  format: Format.PARQUET,
+  timeUnit: TimeUnit.DAILY,
+});
+
+report.addDataCatalog();
+```
+
+This will create an AWS Glue crawler to crawl your report data, an AWS Glue database that references your metadata as well as an Athena Workgroup to enable you to query your data using Amazon Athena.
+
+If you would like to enable a data catalog on an existing report, you can use the `CostAndUsageDataCatalog` construct independently and reference your existing S3 Bucket:
+
+```javascript
+import { CostAndUsageDataCatalog } from "@cremich/cdk-bill-bo";
+
+new CostAndUsageDataCatalog(this, "costs-catalog", {
+  curBucket: bucket,
 });
 ```
 

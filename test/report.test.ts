@@ -146,18 +146,43 @@ describe("Report", () => {
     });
   });
 
-  // test("Athena integration is activated", () => {
-  //   new CostAndUsageReport(stack, "Cur", {
-  //     compression: Compression.PARQUET,
-  //     format: Format.PARQUET,
-  //     name: "Cur",
-  //     timeUnit: TimeUnit.DAILY,
-  //   });
+  test("Data catalog is created for a given report", () => {
+    const report = new CostAndUsageReport(stack, "Cur", {
+      compression: Compression.PARQUET,
+      format: Format.PARQUET,
+      timeUnit: TimeUnit.DAILY,
+    });
 
-  //   const assert = assertions.Template.fromStack(stack);
-  //   assert.hasResourceProperties("AWS::CUR::ReportDefinition", {
-  //     AdditionalSchemaElements: ["RESOURCES"],
-  //     AdditionalArtifacts: ["ATHENA"],
-  //   });
-  // });
+    report.addDataCatalog();
+
+    const assert = assertions.Template.fromStack(stack);
+    assert.hasResourceProperties("AWS::Glue::Crawler", {
+      Targets: {
+        S3Targets: [
+          {
+            Exclusions: [
+              "**.json",
+              "**.yml",
+              "**.sql,",
+              "**.csv",
+              "**.gz",
+              "**.zip",
+              "**/cost_and_usage_data_status/*",
+            ],
+            Path: {
+              "Fn::Join": [
+                "",
+                [
+                  "s3://",
+                  {
+                    Ref: "CurbucketDC19903D",
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    });
+  });
 });
