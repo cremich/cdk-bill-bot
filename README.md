@@ -3,8 +3,8 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](./CODE_OF_CONDUCT.md)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?)](https://github.com/prettier/prettier)
-[![release](https://github.com/cremich/cur-cdk-lib/actions/workflows/release.yml/badge.svg)](https://github.com/cremich/cur-cdk-lib/actions/workflows/release.yml)
-[![codecov](https://codecov.io/gh/cremich/cur-cdk-lib/branch/main/graph/badge.svg?token=VFbFQQY6Qh)](https://codecov.io/gh/cremich/cur-cdk-lib)
+[![release](https://github.com/cremich/cdk-bill-bot/actions/workflows/release.yml/badge.svg)](https://github.com/cremich/cdk-bill-bot/actions/workflows/release.yml)
+[![codecov](https://codecov.io/gh/cremich/cdk-bill-bot/branch/main/graph/badge.svg?token=VFbFQQY6Qh)](https://codecov.io/gh/cremich/cdk-bill-bot)
 [![npm version](https://badge.fury.io/js/@cremich%2Fcdk-bill-bot.svg)](https://badge.fury.io/js/@cremich%2Fcdk-bill-bot)
 ![EXPERIMENTAL](https://img.shields.io/badge/stability-experimantal-orange)
 
@@ -73,12 +73,11 @@ In order to receive cost and usage reports, you must have an Amazon S3 bucket in
 > ⚠️ Please keep in mind, that cost and usage reports are only supported in `us-east-1`. The implicit created Bucket will then also be created in `us-east-1` and defaults to the current stack's region.
 
 ```javascript
-import { CUR } from "@cremich/cur";
+import { CostAndUsageReport } from "@cremich/cdk-bill-bo";
 
 new CostAndUsageReport(this, "cur", {
   compression: Compression.PARQUET,
   format: Format.PARQUET,
-  name: "bill-bot",
   timeUnit: TimeUnit.DAILY,
 });
 ```
@@ -86,7 +85,7 @@ new CostAndUsageReport(this, "cur", {
 If you want to provision a custom Amazon S3 bucket, you can use the `CURBucket` construct and provide a reference to this bucket to the `CUR` construct. This gives you the flexibility, to provision the Amazon S3 bucket in another region while keeping the report provisioned in `us-east-1`
 
 ```javascript
-import { CUR, CURBucket } from "@cremich/cur";
+import { CostAndUsageReport, CURBucket } from "@cremich/cdk-bill-bo";
 
 const curBucket = new CURBucket(this, "bucket");
 
@@ -94,8 +93,37 @@ new CostAndUsageReport(this, "cur", {
   bucket: curBucket,
   compression: Compression.PARQUET,
   format: Format.PARQUET,
-  name: "bill-bot",
   timeUnit: TimeUnit.DAILY,
+});
+```
+
+### Use AWS Glue to enable access to your report using Amazon Athena
+
+After you created your report, you can provision a AWS Glue based data catalog for this. This enables Bill and you to analyze your cost and usage reports using Amazon Athena.
+
+If you want to enable a data catalog on a new provisioned report, you can simply call `addDataCatalog()` on your `CostAndUsageReport` construct like
+
+```javascript
+import { CostAndUsageReport } from "@cremich/cdk-bill-bo";
+
+const report = new CostAndUsageReport(this, "cur", {
+  compression: Compression.PARQUET,
+  format: Format.PARQUET,
+  timeUnit: TimeUnit.DAILY,
+});
+
+report.addDataCatalog();
+```
+
+This will create an AWS Glue crawler to crawl your report data, an AWS Glue database that references your metadata as well as an Athena Workgroup to enable you to query your data using Amazon Athena.
+
+If you would like to enable a data catalog on an existing report, you can use the `CostAndUsageDataCatalog` construct independently and reference your existing S3 Bucket:
+
+```javascript
+import { CostAndUsageDataCatalog } from "@cremich/cdk-bill-bo";
+
+new CostAndUsageDataCatalog(this, "costs-catalog", {
+  curBucket: bucket,
 });
 ```
 

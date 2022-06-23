@@ -19,7 +19,6 @@ describe("Report", () => {
     new CostAndUsageReport(stack, "Cur", {
       compression: Compression.PARQUET,
       format: Format.PARQUET,
-      name: "Cur",
       timeUnit: TimeUnit.DAILY,
     });
 
@@ -31,7 +30,6 @@ describe("Report", () => {
     new CostAndUsageReport(stack, "Cur", {
       compression: Compression.PARQUET,
       format: Format.PARQUET,
-      name: "Cur",
       timeUnit: TimeUnit.DAILY,
     });
 
@@ -50,7 +48,6 @@ describe("Report", () => {
     new CostAndUsageReport(stack, "Cur", {
       compression: Compression.PARQUET,
       format: Format.PARQUET,
-      name: "Cur",
       timeUnit: TimeUnit.DAILY,
       versioning: Versioning.CREATE_NEW_REPORT,
     });
@@ -65,7 +62,6 @@ describe("Report", () => {
     new CostAndUsageReport(stack, "Cur", {
       compression: Compression.PARQUET,
       format: Format.PARQUET,
-      name: "Cur",
       timeUnit: TimeUnit.DAILY,
       refreshClosedReports: true,
     });
@@ -80,7 +76,6 @@ describe("Report", () => {
     new CostAndUsageReport(stack, "Cur", {
       compression: Compression.PARQUET,
       format: Format.PARQUET,
-      name: "Cur",
       timeUnit: TimeUnit.HOURLY,
     });
 
@@ -94,7 +89,6 @@ describe("Report", () => {
     new CostAndUsageReport(stack, "Cur", {
       compression: Compression.PARQUET,
       format: Format.PARQUET,
-      name: "Cur",
       timeUnit: TimeUnit.DAILY,
     });
 
@@ -103,7 +97,6 @@ describe("Report", () => {
       S3Bucket: {
         Ref: "CurbucketDC19903D",
       },
-      S3Prefix: "cur",
       S3Region: {
         Ref: "AWS::Region",
       },
@@ -115,7 +108,6 @@ describe("Report", () => {
     new CostAndUsageReport(stack, "Cur", {
       compression: Compression.PARQUET,
       format: Format.PARQUET,
-      name: "Cur",
       timeUnit: TimeUnit.DAILY,
       bucket,
     });
@@ -125,9 +117,71 @@ describe("Report", () => {
       S3Bucket: {
         Ref: "bucket43879C71",
       },
-      S3Prefix: "cur",
       S3Region: {
         Ref: "AWS::Region",
+      },
+    });
+  });
+
+  test("S3 prefix is set to AWS account id", () => {
+    new CostAndUsageReport(stack, "Cur", {
+      compression: Compression.PARQUET,
+      format: Format.PARQUET,
+      timeUnit: TimeUnit.DAILY,
+    });
+
+    const assert = assertions.Template.fromStack(stack);
+    assert.hasResourceProperties("AWS::CUR::ReportDefinition", {
+      S3Prefix: {
+        "Fn::Join": [
+          "",
+          [
+            {
+              Ref: "AWS::AccountId",
+            },
+            "-cur",
+          ],
+        ],
+      },
+    });
+  });
+
+  test("Data catalog is created for a given report", () => {
+    const report = new CostAndUsageReport(stack, "Cur", {
+      compression: Compression.PARQUET,
+      format: Format.PARQUET,
+      timeUnit: TimeUnit.DAILY,
+    });
+
+    report.addDataCatalog();
+
+    const assert = assertions.Template.fromStack(stack);
+    assert.hasResourceProperties("AWS::Glue::Crawler", {
+      Targets: {
+        S3Targets: [
+          {
+            Exclusions: [
+              "**.json",
+              "**.yml",
+              "**.sql,",
+              "**.csv",
+              "**.gz",
+              "**.zip",
+              "**/cost_and_usage_data_status/*",
+            ],
+            Path: {
+              "Fn::Join": [
+                "",
+                [
+                  "s3://",
+                  {
+                    Ref: "CurbucketDC19903D",
+                  },
+                ],
+              ],
+            },
+          },
+        ],
       },
     });
   });
