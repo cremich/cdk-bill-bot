@@ -41,6 +41,33 @@
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
     },
+    "bundle": {
+      "name": "bundle",
+      "description": "Prepare assets",
+      "steps": [
+        {
+          "spawn": "bundle:notifications/slack.lambda"
+        }
+      ]
+    },
+    "bundle:notifications/slack.lambda": {
+      "name": "bundle:notifications/slack.lambda",
+      "description": "Create a JavaScript bundle from src/notifications/slack.lambda.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/notifications/slack.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/notifications/slack.lambda/index.js\" --external:aws-sdk"
+        }
+      ]
+    },
+    "bundle:notifications/slack.lambda:watch": {
+      "name": "bundle:notifications/slack.lambda:watch",
+      "description": "Continuously update the JavaScript bundle from src/notifications/slack.lambda.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/notifications/slack.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/notifications/slack.lambda/index.js\" --external:aws-sdk --watch"
+        }
+      ]
+    },
     "clobber": {
       "name": "clobber",
       "description": "hard resets to HEAD of origin and cleans the local repo",
@@ -172,7 +199,12 @@
     },
     "pre-compile": {
       "name": "pre-compile",
-      "description": "Prepare the project for compilation"
+      "description": "Prepare the project for compilation",
+      "steps": [
+        {
+          "spawn": "bundle"
+        }
+      ]
     },
     "precommit": {
       "name": "precommit",
@@ -280,19 +312,19 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged,nock'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged,nock'"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged,nock'"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged,nock'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged,nock'"
         },
         {
           "exec": "yarn install --check-files"

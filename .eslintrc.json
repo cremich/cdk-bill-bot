@@ -55,7 +55,8 @@
       {
         "devDependencies": [
           "**/test/**",
-          "**/build-tools/**"
+          "**/build-tools/**",
+          "src/notifications/slack.lambda.ts"
         ],
         "optionalDependencies": false,
         "peerDependencies": true

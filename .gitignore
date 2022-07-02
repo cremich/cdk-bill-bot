@@ -52,3 +52,5 @@ junit.xml
 .jsii
 tsconfig.json
 !/API.md
+/assets/
+!/src/notifications/slack-function.ts

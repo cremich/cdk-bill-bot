@@ -1405,6 +1405,121 @@ The region this bucket is provisioned.
 ---
 
 
+### Notifications <a name="Notifications" id="@cremich/cdk-bill-bot.Notifications"></a>
+
+A new set of resources to send notifications about costs and usage.
+
+#### Initializers <a name="Initializers" id="@cremich/cdk-bill-bot.Notifications.Initializer"></a>
+
+```typescript
+import { Notifications } from '@cremich/cdk-bill-bot'
+
+new Notifications(scope: Construct, id: string, props?: NotificationsProps)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.Notifications.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.Notifications.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.Notifications.Initializer.parameter.props">props</a></code> | <code><a href="#@cremich/cdk-bill-bot.NotificationsProps">NotificationsProps</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="@cremich/cdk-bill-bot.Notifications.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="@cremich/cdk-bill-bot.Notifications.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `props`<sup>Optional</sup> <a name="props" id="@cremich/cdk-bill-bot.Notifications.Initializer.parameter.props"></a>
+
+- *Type:* <a href="#@cremich/cdk-bill-bot.NotificationsProps">NotificationsProps</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.Notifications.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="@cremich/cdk-bill-bot.Notifications.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.Notifications.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="@cremich/cdk-bill-bot.Notifications.isConstruct"></a>
+
+```typescript
+import { Notifications } from '@cremich/cdk-bill-bot'
+
+Notifications.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="@cremich/cdk-bill-bot.Notifications.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.Notifications.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="@cremich/cdk-bill-bot.Notifications.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
 ## Structs <a name="Structs" id="Structs"></a>
 
 ### CostAndUsageDataCatalogProps <a name="CostAndUsageDataCatalogProps" id="@cremich/cdk-bill-bot.CostAndUsageDataCatalogProps"></a>
@@ -1896,6 +2011,41 @@ public readonly websiteRoutingRules: RoutingRule[];
 - *Default:* No redirection rules.
 
 Rules that define when a redirect is applied and the redirect behavior.
+
+---
+
+### NotificationsProps <a name="NotificationsProps" id="@cremich/cdk-bill-bot.NotificationsProps"></a>
+
+Properties for creating AWS resources to send notifications.
+
+#### Initializer <a name="Initializer" id="@cremich/cdk-bill-bot.NotificationsProps.Initializer"></a>
+
+```typescript
+import { NotificationsProps } from '@cremich/cdk-bill-bot'
+
+const notificationsProps: NotificationsProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.NotificationsProps.property.slackWebhookUrl">slackWebhookUrl</a></code> | <code>string</code> | The slack webhook url where notifications via slack are sent to. |
+
+---
+
+##### `slackWebhookUrl`<sup>Optional</sup> <a name="slackWebhookUrl" id="@cremich/cdk-bill-bot.NotificationsProps.property.slackWebhookUrl"></a>
+
+```typescript
+public readonly slackWebhookUrl: string;
+```
+
+- *Type:* string
+
+The slack webhook url where notifications via slack are sent to.
+
+In order to get a webhook url, please have a look at the official
+documentation @see https://api.slack.com/messaging/webhooks
 
 ---
 

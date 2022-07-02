@@ -19,6 +19,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
     "husky@8.0.1",
     "lint-staged@13.0.1",
     "@types/jest@^27.5.2",
+    "@types/aws-lambda@8.10.101",
+    "nock@13.2.8",
   ],
   eslintOptions: {
     prettier: true,
