@@ -9,8 +9,10 @@
     "build": "npx projen build",
     "bump": "npx projen bump",
     "bundle": "npx projen bundle",
-    "bundle:notifications/slack.lambda": "npx projen bundle:notifications/slack.lambda",
-    "bundle:notifications/slack.lambda:watch": "npx projen bundle:notifications/slack.lambda:watch",
+    "bundle:daily-spends/digest-slack-notification.lambda": "npx projen bundle:daily-spends/digest-slack-notification.lambda",
+    "bundle:daily-spends/digest-slack-notification.lambda:watch": "npx projen bundle:daily-spends/digest-slack-notification.lambda:watch",
+    "bundle:daily-spends/yesterday.lambda": "npx projen bundle:daily-spends/yesterday.lambda",
+    "bundle:daily-spends/yesterday.lambda:watch": "npx projen bundle:daily-spends/yesterday.lambda:watch",
     "clobber": "npx projen clobber",
     "compat": "npx projen compat",
     "compile": "npx projen compile",
@@ -43,6 +45,8 @@
     "organization": false
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "3.131.0",
+    "@aws-sdk/s3-request-presigner": "3.135.0",
     "@commitlint/cli": "17.0.2",
     "@commitlint/config-conventional": "17.0.2",
     "@types/aws-lambda": "8.10.101",
@@ -51,6 +55,7 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "aws-cdk-lib": "2.1.0",
+    "aws-sdk-client-mock": "1.0.0",
     "constructs": "10.1.42",
     "cz-conventional-changelog": "3.3.0",
     "esbuild": "^0.14.47",
@@ -81,6 +86,16 @@
     "aws-cdk-lib": "^2.1.0",
     "constructs": "^10.1.42"
   },
+  "dependencies": {
+    "@slack/types": "^2.7.0",
+    "@slack/webhook": "6.1.0",
+    "csv-parse": "5.3.0"
+  },
+  "bundledDependencies": [
+    "@slack/types",
+    "@slack/webhook",
+    "csv-parse"
+  ],
   "keywords": [
     "aws",
     "billing",

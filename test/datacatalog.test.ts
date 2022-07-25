@@ -44,7 +44,9 @@ describe("Report data catalog", () => {
       },
       Configuration:
         '{"Version":1,"CrawlerOutput":{"Tables":{"AddOrUpdateBehavior":"MergeNewColumns"}},"Grouping":{"TableGroupingPolicy":"CombineCompatibleSchemas"}}',
-      DatabaseName: "db_billbotcurcatalog",
+      DatabaseName: {
+        Ref: "billbotcurcatalogdatabase633FC613",
+      },
       Name: "billbotcurcatalog",
       SchemaChangePolicy: {
         DeleteBehavior: "LOG",

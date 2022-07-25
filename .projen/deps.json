@@ -1,6 +1,16 @@
 {
   "dependencies": [
     {
+      "name": "@aws-sdk/client-s3",
+      "version": "3.131.0",
+      "type": "build"
+    },
+    {
+      "name": "@aws-sdk/s3-request-presigner",
+      "version": "3.135.0",
+      "type": "build"
+    },
+    {
       "name": "@commitlint/cli",
       "version": "17.0.2",
       "type": "build"
@@ -37,6 +47,11 @@
     {
       "name": "aws-cdk-lib",
       "version": "2.1.0",
+      "type": "build"
+    },
+    {
+      "name": "aws-sdk-client-mock",
+      "version": "1.0.0",
       "type": "build"
     },
     {
@@ -149,6 +164,20 @@
     {
       "name": "typescript",
       "type": "build"
+    },
+    {
+      "name": "@slack/types",
+      "type": "bundled"
+    },
+    {
+      "name": "@slack/webhook",
+      "version": "6.1.0",
+      "type": "bundled"
+    },
+    {
+      "name": "csv-parse",
+      "version": "5.3.0",
+      "type": "bundled"
     },
     {
       "name": "aws-cdk-lib",

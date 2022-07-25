@@ -46,25 +46,46 @@
       "description": "Prepare assets",
       "steps": [
         {
-          "spawn": "bundle:notifications/slack.lambda"
+          "spawn": "bundle:daily-spends/digest-slack-notification.lambda"
+        },
+        {
+          "spawn": "bundle:daily-spends/yesterday.lambda"
         }
       ]
     },
-    "bundle:notifications/slack.lambda": {
-      "name": "bundle:notifications/slack.lambda",
-      "description": "Create a JavaScript bundle from src/notifications/slack.lambda.ts",
+    "bundle:daily-spends/digest-slack-notification.lambda": {
+      "name": "bundle:daily-spends/digest-slack-notification.lambda",
+      "description": "Create a JavaScript bundle from src/daily-spends/digest-slack-notification.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/notifications/slack.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/notifications/slack.lambda/index.js\" --external:aws-sdk"
+          "exec": "esbuild --bundle src/daily-spends/digest-slack-notification.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/digest-slack-notification.lambda/index.js\" --external:aws-sdk"
         }
       ]
     },
-    "bundle:notifications/slack.lambda:watch": {
-      "name": "bundle:notifications/slack.lambda:watch",
-      "description": "Continuously update the JavaScript bundle from src/notifications/slack.lambda.ts",
+    "bundle:daily-spends/digest-slack-notification.lambda:watch": {
+      "name": "bundle:daily-spends/digest-slack-notification.lambda:watch",
+      "description": "Continuously update the JavaScript bundle from src/daily-spends/digest-slack-notification.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/notifications/slack.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/notifications/slack.lambda/index.js\" --external:aws-sdk --watch"
+          "exec": "esbuild --bundle src/daily-spends/digest-slack-notification.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/digest-slack-notification.lambda/index.js\" --external:aws-sdk --watch"
+        }
+      ]
+    },
+    "bundle:daily-spends/yesterday.lambda": {
+      "name": "bundle:daily-spends/yesterday.lambda",
+      "description": "Create a JavaScript bundle from src/daily-spends/yesterday.lambda.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/daily-spends/yesterday.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/yesterday.lambda/index.js\" --external:aws-sdk"
+        }
+      ]
+    },
+    "bundle:daily-spends/yesterday.lambda:watch": {
+      "name": "bundle:daily-spends/yesterday.lambda:watch",
+      "description": "Continuously update the JavaScript bundle from src/daily-spends/yesterday.lambda.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/daily-spends/yesterday.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/yesterday.lambda/index.js\" --external:aws-sdk --watch"
         }
       ]
     },
@@ -312,19 +333,19 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged,nock'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@aws-sdk/client-s3,@aws-sdk/s3-request-presigner,@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,aws-sdk-client-mock,constructs,cz-conventional-changelog,husky,lint-staged,nock,@slack/webhook,csv-parse'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged,nock'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@aws-sdk/client-s3,@aws-sdk/s3-request-presigner,@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,aws-sdk-client-mock,constructs,cz-conventional-changelog,husky,lint-staged,nock,@slack/webhook,csv-parse'"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged,nock'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@aws-sdk/client-s3,@aws-sdk/s3-request-presigner,@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,aws-sdk-client-mock,constructs,cz-conventional-changelog,husky,lint-staged,nock,@slack/webhook,csv-parse'"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged,nock'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@aws-sdk/client-s3,@aws-sdk/s3-request-presigner,@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,aws-sdk-client-mock,constructs,cz-conventional-changelog,husky,lint-staged,nock,@slack/webhook,csv-parse'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,constructs,cz-conventional-changelog,husky,lint-staged,nock'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@aws-sdk/client-s3,@aws-sdk/s3-request-presigner,@commitlint/cli,@commitlint/config-conventional,@types/aws-lambda,aws-cdk-lib,aws-sdk-client-mock,constructs,cz-conventional-changelog,husky,lint-staged,nock,@slack/webhook,csv-parse'"
         },
         {
           "exec": "yarn install --check-files"

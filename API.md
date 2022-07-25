@@ -105,6 +105,7 @@ Any object.
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.athenaWorkgroup">athenaWorkgroup</a></code> | <code>aws-cdk-lib.aws_athena.CfnWorkGroup</code> | The name of the Amazon Athena workgroup to query the data catalog. |
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.crawler">crawler</a></code> | <code>aws-cdk-lib.aws_glue.CfnCrawler</code> | The name of the AWS Glue crawler that creates the data catalog. |
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.curBucket">curBucket</a></code> | <code>aws-cdk-lib.aws_s3.IBucket</code> | The bucket where AWS delivers the report. |
+| <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.glueDatabase">glueDatabase</a></code> | <code>aws-cdk-lib.aws_glue.CfnDatabase</code> | The name of the AWS Glue database for your cost and usage data. |
 
 ---
 
@@ -165,6 +166,18 @@ public readonly curBucket: IBucket;
 - *Type:* aws-cdk-lib.aws_s3.IBucket
 
 The bucket where AWS delivers the report.
+
+---
+
+##### `glueDatabase`<sup>Required</sup> <a name="glueDatabase" id="@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.glueDatabase"></a>
+
+```typescript
+public readonly glueDatabase: CfnDatabase;
+```
+
+- *Type:* aws-cdk-lib.aws_glue.CfnDatabase
+
+The name of the AWS Glue database for your cost and usage data.
 
 ---
 
@@ -1405,41 +1418,41 @@ The region this bucket is provisioned.
 ---
 
 
-### Notifications <a name="Notifications" id="@cremich/cdk-bill-bot.Notifications"></a>
+### DailySpendsDigest <a name="DailySpendsDigest" id="@cremich/cdk-bill-bot.DailySpendsDigest"></a>
 
-A new set of resources to send notifications about costs and usage.
+A new set of resources to provide a daily spends digest.
 
-#### Initializers <a name="Initializers" id="@cremich/cdk-bill-bot.Notifications.Initializer"></a>
+#### Initializers <a name="Initializers" id="@cremich/cdk-bill-bot.DailySpendsDigest.Initializer"></a>
 
 ```typescript
-import { Notifications } from '@cremich/cdk-bill-bot'
+import { DailySpendsDigest } from '@cremich/cdk-bill-bot'
 
-new Notifications(scope: Construct, id: string, props?: NotificationsProps)
+new DailySpendsDigest(scope: Construct, id: string, props: DailySpendsDigestProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#@cremich/cdk-bill-bot.Notifications.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
-| <code><a href="#@cremich/cdk-bill-bot.Notifications.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#@cremich/cdk-bill-bot.Notifications.Initializer.parameter.props">props</a></code> | <code><a href="#@cremich/cdk-bill-bot.NotificationsProps">NotificationsProps</a></code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.props">props</a></code> | <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigestProps">DailySpendsDigestProps</a></code> | *No description.* |
 
 ---
 
-##### `scope`<sup>Required</sup> <a name="scope" id="@cremich/cdk-bill-bot.Notifications.Initializer.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.scope"></a>
 
 - *Type:* constructs.Construct
 
 ---
 
-##### `id`<sup>Required</sup> <a name="id" id="@cremich/cdk-bill-bot.Notifications.Initializer.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="id" id="@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.id"></a>
 
 - *Type:* string
 
 ---
 
-##### `props`<sup>Optional</sup> <a name="props" id="@cremich/cdk-bill-bot.Notifications.Initializer.parameter.props"></a>
+##### `props`<sup>Required</sup> <a name="props" id="@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#@cremich/cdk-bill-bot.NotificationsProps">NotificationsProps</a>
+- *Type:* <a href="#@cremich/cdk-bill-bot.DailySpendsDigestProps">DailySpendsDigestProps</a>
 
 ---
 
@@ -1447,11 +1460,11 @@ new Notifications(scope: Construct, id: string, props?: NotificationsProps)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#@cremich/cdk-bill-bot.Notifications.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.toString">toString</a></code> | Returns a string representation of this construct. |
 
 ---
 
-##### `toString` <a name="toString" id="@cremich/cdk-bill-bot.Notifications.toString"></a>
+##### `toString` <a name="toString" id="@cremich/cdk-bill-bot.DailySpendsDigest.toString"></a>
 
 ```typescript
 public toString(): string
@@ -1463,16 +1476,16 @@ Returns a string representation of this construct.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#@cremich/cdk-bill-bot.Notifications.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 
 ---
 
-##### `isConstruct` <a name="isConstruct" id="@cremich/cdk-bill-bot.Notifications.isConstruct"></a>
+##### `isConstruct` <a name="isConstruct" id="@cremich/cdk-bill-bot.DailySpendsDigest.isConstruct"></a>
 
 ```typescript
-import { Notifications } from '@cremich/cdk-bill-bot'
+import { DailySpendsDigest } from '@cremich/cdk-bill-bot'
 
-Notifications.isConstruct(x: any)
+DailySpendsDigest.isConstruct(x: any)
 ```
 
 Checks if `x` is a construct.
@@ -1491,7 +1504,7 @@ library can be accidentally installed, and `instanceof` will behave
 unpredictably. It is safest to avoid using `instanceof`, and using
 this type-testing method instead.
 
-###### `x`<sup>Required</sup> <a name="x" id="@cremich/cdk-bill-bot.Notifications.isConstruct.parameter.x"></a>
+###### `x`<sup>Required</sup> <a name="x" id="@cremich/cdk-bill-bot.DailySpendsDigest.isConstruct.parameter.x"></a>
 
 - *Type:* any
 
@@ -1503,11 +1516,11 @@ Any object.
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#@cremich/cdk-bill-bot.Notifications.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 
 ---
 
-##### `node`<sup>Required</sup> <a name="node" id="@cremich/cdk-bill-bot.Notifications.property.node"></a>
+##### `node`<sup>Required</sup> <a name="node" id="@cremich/cdk-bill-bot.DailySpendsDigest.property.node"></a>
 
 ```typescript
 public readonly node: Node;
@@ -1538,7 +1551,7 @@ const costAndUsageDataCatalogProps: CostAndUsageDataCatalogProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalogProps.property.curBucket">curBucket</a></code> | <code>aws-cdk-lib.aws_s3.IBucket</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalogProps.property.curBucket">curBucket</a></code> | <code>aws-cdk-lib.aws_s3.IBucket</code> | The S3 bucket that contains the cost and usage report. |
 
 ---
 
@@ -1549,6 +1562,8 @@ public readonly curBucket: IBucket;
 ```
 
 - *Type:* aws-cdk-lib.aws_s3.IBucket
+
+The S3 bucket that contains the cost and usage report.
 
 ---
 
@@ -2014,38 +2029,51 @@ Rules that define when a redirect is applied and the redirect behavior.
 
 ---
 
-### NotificationsProps <a name="NotificationsProps" id="@cremich/cdk-bill-bot.NotificationsProps"></a>
+### DailySpendsDigestProps <a name="DailySpendsDigestProps" id="@cremich/cdk-bill-bot.DailySpendsDigestProps"></a>
 
-Properties for creating AWS resources to send notifications.
+Properties for creating AWS resources to provide a daily spends digest analysis.
 
-#### Initializer <a name="Initializer" id="@cremich/cdk-bill-bot.NotificationsProps.Initializer"></a>
+#### Initializer <a name="Initializer" id="@cremich/cdk-bill-bot.DailySpendsDigestProps.Initializer"></a>
 
 ```typescript
-import { NotificationsProps } from '@cremich/cdk-bill-bot'
+import { DailySpendsDigestProps } from '@cremich/cdk-bill-bot'
 
-const notificationsProps: NotificationsProps = { ... }
+const dailySpendsDigestProps: DailySpendsDigestProps = { ... }
 ```
 
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#@cremich/cdk-bill-bot.NotificationsProps.property.slackWebhookUrl">slackWebhookUrl</a></code> | <code>string</code> | The slack webhook url where notifications via slack are sent to. |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigestProps.property.datacatalog">datacatalog</a></code> | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog">CostAndUsageDataCatalog</a></code> | A reference to your cost and usage data catalog. |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigestProps.property.slackWebHookUrl">slackWebHookUrl</a></code> | <code>string</code> | The Slack webhook URL to send report results to. |
 
 ---
 
-##### `slackWebhookUrl`<sup>Optional</sup> <a name="slackWebhookUrl" id="@cremich/cdk-bill-bot.NotificationsProps.property.slackWebhookUrl"></a>
+##### `datacatalog`<sup>Required</sup> <a name="datacatalog" id="@cremich/cdk-bill-bot.DailySpendsDigestProps.property.datacatalog"></a>
 
 ```typescript
-public readonly slackWebhookUrl: string;
+public readonly datacatalog: CostAndUsageDataCatalog;
+```
+
+- *Type:* <a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog">CostAndUsageDataCatalog</a>
+
+A reference to your cost and usage data catalog.
+
+---
+
+##### `slackWebHookUrl`<sup>Required</sup> <a name="slackWebHookUrl" id="@cremich/cdk-bill-bot.DailySpendsDigestProps.property.slackWebHookUrl"></a>
+
+```typescript
+public readonly slackWebHookUrl: string;
 ```
 
 - *Type:* string
 
-The slack webhook url where notifications via slack are sent to.
+The Slack webhook URL to send report results to.
 
-In order to get a webhook url, please have a look at the official
-documentation @see https://api.slack.com/messaging/webhooks
+If this url is empty or invalid,
+the construct creation will fail with an error.
 
 ---
 
