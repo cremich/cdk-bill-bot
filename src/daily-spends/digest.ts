@@ -32,6 +32,9 @@ export interface DailySpendsDigestProps {
  * A new set of resources to provide a daily spends digest.
  */
 export class DailySpendsDigest extends Construct {
+  readonly stateMachine: sfn.StateMachine;
+  readonly preparedStatement: athena.CfnPreparedStatement;
+
   constructor(scope: Construct, id: string, props: DailySpendsDigestProps) {
     super(scope, id);
 
@@ -39,7 +42,7 @@ export class DailySpendsDigest extends Construct {
       throw Error(`slack webhook url ${props.slackWebHookUrl} is invalid`);
     }
 
-    const dailySpendsStatement = new athena.CfnPreparedStatement(
+    this.preparedStatement = new athena.CfnPreparedStatement(
       this,
       "daily-spends",
       {
@@ -49,13 +52,13 @@ export class DailySpendsDigest extends Construct {
       }
     );
 
-    this.createStateMachine(props, dailySpendsStatement);
+    this.stateMachine = this.createStateMachine(props, this.preparedStatement);
   }
 
   private createStateMachine(
     props: DailySpendsDigestProps,
     preparedStatement: athena.CfnPreparedStatement
-  ) {
+  ): sfn.StateMachine {
     const yesterdayFunction = new YesterdayFunction(this, "yesterday");
     const slackMessageFunction = new DigestSlackNotificationFunction(
       this,
@@ -159,6 +162,7 @@ export class DailySpendsDigest extends Construct {
         ],
       })
     );
+    return stateMachine;
   }
 
   private getDailySpendsQuery(): string {

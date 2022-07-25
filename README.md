@@ -10,6 +10,8 @@
 
 This Construct Library provides L2 and L3 constructs for resources to build AWS Cost and Usage reports using the AWS Cloud Development Kit (CDK).
 
+☝️ Important: Bill uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied.
+
 ---
 
 **⚠️ This is an early alpha pre-release version. The API will be subject to change until the library reaches GA status. Therefore make sure you use an exact version in your `package.json` before it reaches 1.0.0.**
@@ -41,6 +43,14 @@ In addition to the daily status report, Bill enables various best practices in t
 The AWS Cost and Usage Reports (AWS CUR) contains the most comprehensive set of cost and usage data available. You can use Cost and Usage Reports to publish your AWS billing reports to an Amazon Simple Storage Service (Amazon S3) bucket that you own. You can receive reports that break down your costs by the hour, day, or month, by product or product resource, or by tags that you define yourself.
 
 Source: https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html
+
+## 📝 Requirements
+
+- [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in.
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured
+- [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) (AWS CDK) installed
+- [Slack Webhook](https://api.slack.com/messaging/webhooks) created
 
 ## 🚀 Getting started
 
@@ -127,16 +137,46 @@ new CostAndUsageDataCatalog(this, "costs-catalog", {
 });
 ```
 
+### Daily spends digest
+
+Bill is able to analyze your spends on a daily bases. Bill will calculate your total costs and send you a digest message via slack. You can enable the daily spends digest by using the following construct and connecting it with your cost and usage data catalog.
+
+```javascript
+import { CostAndUsageDataCatalog } from "@cremich/cdk-bill-bot";
+
+new DailySpendsDigest(this, "daily-spends-digest", {
+  datacatalog,
+  slackWebHookUrl:
+    "https://hooks.slack.com/services/WORKSPACE_ID/CHANNEL_ID/personalSecret",
+});
+```
+
+To use this construct, you have to provide a valid Slack webhook. If the webhok is not valid, the construct creation will during synthesis time. Please follow the official documentation to [create a personal and private webhook](https://api.slack.com/messaging/webhooks). If everything is setup correctly and your first daily spends are analyzed, you will receive a message like the following:
+
+![Daily Spends Digest](./docs/daily-spends-digest.png)
+
+The daily spends digest is orchestrated using AWS Step Functions. You can run the state machine workflow that is created along the `DailySpendsDigest` construct manually at any time. The state machine does not require any special execution input. By default, the state machine will be executed automatically once a day and analyze yesterdays usage data once they are propagated in the underlying cost and usage report.
+
+By default, a daily spends CSV report is ready to be downloaded using a pre-signed URL. The URL will automatically expire after 15 minutes. You can use the report to dive deeper into the daily spends results. Please check out the [sample file](./test/daily-spends/daily-spends.csv) that is provided within this repository.
+
 ## 🤔 FAQs
 
 ### Can I also use Bill in my multi-account setup?
 
-TO BE ANSWERED
+Bill can basically run in any AWS account but it might not be designed to cover all multi account use cases in detail. Depending on customer feedback, this might be added at a later stage.
 
 ### I already have an existing Cost and Usage report export setup. Can Bll reuse this instead of provisioning a new one?
 
-TO BE ANSWERED
+Yes. You can skip the creation of a CUR export managed by Bill and point your existing S3 bucket to the datacatalog construct.
 
-### Does Bill also support E-Mail as a notification channel?
+### What channels does Bill support?
 
-TO BE ANSWERED
+Right now, Bill is capable to send notifications to a Slack channel of your choice. In order to enable Bill to send messages via Slack, you have to [create a Slack Webhook](https://api.slack.com/messaging/webhooks).
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+
+Feel free to check [issues page](https://github.com/cremich/cdk-bill-bot/issues) for open issues or create one for feature requests or if you have general questions.
+
+Be also sure to review our [contributing guidelines](./CONTRIBUTING.md) and [code of conduct](./CODE_OF_CONDUCT.md).
