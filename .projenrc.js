@@ -24,7 +24,6 @@ const project = new awscdk.AwsCdkConstructLibrary({
     "@types/jest@^27.5.2",
     "@types/aws-lambda@8.10.101",
     "aws-sdk-client-mock@1.0.0",
-    "nock@13.2.8",
   ],
   eslintOptions: {
     prettier: true,

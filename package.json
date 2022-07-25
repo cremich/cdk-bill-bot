@@ -74,7 +74,6 @@
     "jsii-pacmak": "^1.61.0",
     "json-schema": "^0.4.0",
     "lint-staged": "13.0.1",
-    "nock": "13.2.8",
     "npm-check-updates": "^12",
     "prettier": "^2.7.1",
     "projen": "^0.58.15",

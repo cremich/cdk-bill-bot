@@ -134,11 +134,6 @@
       "type": "build"
     },
     {
-      "name": "nock",
-      "version": "13.2.8",
-      "type": "build"
-    },
-    {
       "name": "npm-check-updates",
       "version": "^12",
       "type": "build"
