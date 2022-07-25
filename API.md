@@ -1517,6 +1517,8 @@ Any object.
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.property.preparedStatement">preparedStatement</a></code> | <code>aws-cdk-lib.aws_athena.CfnPreparedStatement</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.property.stateMachine">stateMachine</a></code> | <code>aws-cdk-lib.aws_stepfunctions.StateMachine</code> | *No description.* |
 
 ---
 
@@ -1529,6 +1531,26 @@ public readonly node: Node;
 - *Type:* constructs.Node
 
 The tree node.
+
+---
+
+##### `preparedStatement`<sup>Required</sup> <a name="preparedStatement" id="@cremich/cdk-bill-bot.DailySpendsDigest.property.preparedStatement"></a>
+
+```typescript
+public readonly preparedStatement: CfnPreparedStatement;
+```
+
+- *Type:* aws-cdk-lib.aws_athena.CfnPreparedStatement
+
+---
+
+##### `stateMachine`<sup>Required</sup> <a name="stateMachine" id="@cremich/cdk-bill-bot.DailySpendsDigest.property.stateMachine"></a>
+
+```typescript
+public readonly stateMachine: StateMachine;
+```
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.StateMachine
 
 ---
 
