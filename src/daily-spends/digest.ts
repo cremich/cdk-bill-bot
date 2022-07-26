@@ -51,6 +51,7 @@ export class DailySpendsDigest extends Construct {
         workGroup: props.datacatalog.athenaWorkgroup.name,
       }
     );
+    this.preparedStatement.addDependsOn(props.datacatalog.athenaWorkgroup);
 
     this.stateMachine = this.createStateMachine(props, this.preparedStatement);
   }

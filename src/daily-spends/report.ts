@@ -55,6 +55,9 @@ export class DailySpendsReport {
   }
 
   payerAccountId(): string {
+    if (this.isEmpty()) {
+      throw Error("payer account not available. Report is empty.");
+    }
     return this.rows[0].payer_account_id;
   }
 

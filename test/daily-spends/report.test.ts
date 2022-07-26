@@ -68,7 +68,9 @@ describe("Daily spends report", () => {
   });
   test("Usage date is not available in empty report", () => {
     const report = new DailySpendsReport([]);
-    expect(report.usageDate).toThrow();
+    expect(() => report.usageDate()).toThrowError(
+      "usage date not available. Report is empty."
+    );
   });
   test("Payer account id is available", () => {
     const report = new DailySpendsReport(reportRows);
@@ -76,7 +78,9 @@ describe("Daily spends report", () => {
   });
   test("Payer account id is not available in empty report", () => {
     const report = new DailySpendsReport([]);
-    expect(report.payerAccountId).toThrow();
+    expect(() => report.payerAccountId()).toThrow(
+      "payer account not available. Report is empty."
+    );
   });
   test("Total costs are summed", () => {
     const report = new DailySpendsReport(reportRows);
