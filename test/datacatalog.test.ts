@@ -52,6 +52,9 @@ describe("Report data catalog", () => {
         DeleteBehavior: "LOG",
         UpdateBehavior: "UPDATE_IN_DATABASE",
       },
+      Schedule: {
+        ScheduleExpression: "cron(0 7 * * ? *)",
+      },
     });
   });
 

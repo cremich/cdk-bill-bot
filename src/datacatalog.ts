@@ -111,6 +111,9 @@ export class CostAndUsageDataCatalog extends Construct {
         CrawlerOutput: { Tables: { AddOrUpdateBehavior: "MergeNewColumns" } },
         Grouping: { TableGroupingPolicy: "CombineCompatibleSchemas" },
       }),
+      schedule: {
+        scheduleExpression: "cron(0 7 * * ? *)",
+      },
     });
 
     this.athenaBucket = new s3.Bucket(this, "athena-results", {
