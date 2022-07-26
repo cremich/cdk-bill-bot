@@ -191,4 +191,40 @@ describe("Daily spends digest", () => {
         })
     ).toThrow();
   });
+
+  test("Workflow is triggered once a day at 8am", async () => {
+    const datacatalog = new CostAndUsageDataCatalog(
+      stack,
+      "bill-bot-cur-catalog",
+      {
+        curBucket: new s3.Bucket(stack, "bucket"),
+      }
+    );
+
+    new DailySpendsDigest(stack, "daily-spends-digest", {
+      datacatalog: datacatalog,
+      slackWebHookUrl:
+        "https://hooks.slack.com/services/WORKSPACE/CHANNEL/ran0omI3",
+    });
+
+    const assert = assertions.Template.fromStack(stack);
+    assert.hasResourceProperties("AWS::Events::Rule", {
+      ScheduleExpression: "cron(0 8 * * ? *)",
+      State: "ENABLED",
+      Targets: [
+        {
+          Arn: {
+            Ref: "dailyspendsdigestworkflow5F358DD4",
+          },
+          Id: "Target0",
+          RoleArn: {
+            "Fn::GetAtt": [
+              "dailyspendsdigestworkflowEventsRole7FD06A6B",
+              "Arn",
+            ],
+          },
+        },
+      ],
+    });
+  });
 });

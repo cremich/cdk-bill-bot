@@ -3,6 +3,8 @@ import {
   aws_stepfunctions_tasks as tasks,
   aws_iam as iam,
   aws_athena as athena,
+  aws_events as events,
+  aws_events_targets as targets,
   Stack,
   Duration,
   Names,
@@ -163,6 +165,12 @@ export class DailySpendsDigest extends Construct {
         ],
       })
     );
+
+    const rule = new events.Rule(this, "schedule", {
+      schedule: events.Schedule.cron({ minute: "0", hour: "8" }),
+    });
+    rule.addTarget(new targets.SfnStateMachine(stateMachine));
+
     return stateMachine;
   }
 
