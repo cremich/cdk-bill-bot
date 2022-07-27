@@ -127,6 +127,7 @@ describe("Report data catalog", () => {
       Name: "billbotcurcatalog",
       Description: "Workgroup for Bill bot queries",
       State: "ENABLED",
+      RecursiveDeleteOption: true,
       WorkGroupConfiguration: {
         ResultConfiguration: {
           EncryptionConfiguration: {

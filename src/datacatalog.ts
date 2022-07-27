@@ -125,6 +125,7 @@ export class CostAndUsageDataCatalog extends Construct {
       name: Names.uniqueId(this),
       description: "Workgroup for Bill bot queries",
       state: "ENABLED",
+      recursiveDeleteOption: true,
       workGroupConfiguration: {
         resultConfiguration: {
           encryptionConfiguration: {
