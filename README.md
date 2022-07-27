@@ -53,18 +53,16 @@ Source: https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html
 - [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in.
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured
 - [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) (AWS CDK) installed
+- [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) (AWS CDK) installed. This construct library requires the AWS CDK v2 (>= 2.1.0).
 - [Slack Webhook](https://api.slack.com/messaging/webhooks) created. To speed up the process, Bill provides a [pre-configured app manifest](./docs/slack-app-manifest.yaml). Feel free to download and use it.
 
 ## 🚀 Getting started
-
-This Construct Library requires the AWS CDK v2 (>= 2.1.0). Please follow the [installation ](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) to install the AWS CDK.
 
 ### Installation
 
 You can install Bill in two ways. Either using the CDK library package or by provisioning a default and pre-packaged Cloudformation template within your existing AWS accounts.
 
-### CDK Library for Typescript
+#### CDK Library for Typescript
 
 Bill can be added into your existing Typescript based CDK applications. Simply include the `@cremich/cdk-bill-bot` as a dependency within your application using either NPM or Yarn:
 
@@ -74,7 +72,7 @@ npm install @cremich/cdk-bill-bot --save-dev
 yarn add @cremich/cdk-bill-bot --save-dev
 ```
 
-### Cloudformation template
+#### Cloudformation template
 
 If you want to try and checkout a default configuration of Bill, you can also launch the default Cloudformation template using the following launch button.
 
