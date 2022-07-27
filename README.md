@@ -40,7 +40,15 @@ The AWS Cost and Usage Reports (AWS CUR) contains the most comprehensive set of 
 
 Source: https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html
 
-## 📝 Requirements
+## 🧱 Features & Architecture
+
+- 🪣 Setup cost and usage report exports to S3
+- 🗃 Provide an AWS Glue based datacatalog to crawl and analyze your cost and usage reports
+- 🧮 Daily Spends Digest analysis
+
+![Architecture](./docs/bill.png)
+
+## 📝 Setup requirements
 
 - [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in.
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured
