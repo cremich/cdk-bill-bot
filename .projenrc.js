@@ -41,7 +41,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   ],
   name: "@cremich/cdk-bill-bot",
   npmAccess: NpmAccess.PUBLIC,
-  prerelease: "alpha",
+  majorVersion: 1,
   prettier: true,
   repositoryUrl: "https://github.com/cremich/cdk-bill-bot.git",
   scripts: {

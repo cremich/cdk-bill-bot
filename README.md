@@ -10,13 +10,9 @@
 
 This Construct Library provides L2 and L3 constructs for resources to build AWS Cost and Usage reports using the AWS Cloud Development Kit (CDK).
 
-☝️ Important: Bill uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied.
-
 ---
 
-**⚠️ This is an early alpha pre-release version. The API will be subject to change until the library reaches GA status. Therefore make sure you use an exact version in your `package.json` before it reaches 1.0.0.**
-
-**Please keep this warning in mind, if you already consider to use Bill in production environments!**
+**☝️ Important: Bill uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied.**
 
 ---
 
@@ -44,23 +40,29 @@ The AWS Cost and Usage Reports (AWS CUR) contains the most comprehensive set of 
 
 Source: https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html
 
-## 📝 Requirements
+## 🧱 Features & Architecture
+
+- 🪣 Setup cost and usage report exports to S3
+- 🗃 Provide an AWS Glue based datacatalog to crawl and analyze your cost and usage reports
+- 🧮 Daily Spends Digest analysis
+
+![Architecture](./docs/bill.png)
+
+## 📝 Setup requirements
 
 - [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in.
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured
 - [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) (AWS CDK) installed
+- [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) (AWS CDK) installed. This construct library requires the AWS CDK v2 (>= 2.1.0).
 - [Slack Webhook](https://api.slack.com/messaging/webhooks) created. To speed up the process, Bill provides a [pre-configured app manifest](./docs/slack-app-manifest.yaml). Feel free to download and use it.
 
 ## 🚀 Getting started
-
-This Construct Library requires the AWS CDK v2 (>= 2.1.0). Please follow the [installation ](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) to install the AWS CDK.
 
 ### Installation
 
 You can install Bill in two ways. Either using the CDK library package or by provisioning a default and pre-packaged Cloudformation template within your existing AWS accounts.
 
-### CDK Library for Typescript
+#### CDK Library for Typescript
 
 Bill can be added into your existing Typescript based CDK applications. Simply include the `@cremich/cdk-bill-bot` as a dependency within your application using either NPM or Yarn:
 
@@ -70,7 +72,7 @@ npm install @cremich/cdk-bill-bot --save-dev
 yarn add @cremich/cdk-bill-bot --save-dev
 ```
 
-### Cloudformation template
+#### Cloudformation template
 
 If you want to try and checkout a default configuration of Bill, you can also launch the default Cloudformation template using the following launch button.
 

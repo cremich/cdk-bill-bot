@@ -256,7 +256,7 @@
       "description": "Prepare a release from \"main\" branch",
       "env": {
         "RELEASE": "true",
-        "PRERELEASE": "alpha"
+        "MAJOR": "1"
       },
       "steps": [
         {
