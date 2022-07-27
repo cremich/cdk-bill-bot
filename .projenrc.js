@@ -12,13 +12,18 @@ const project = new awscdk.AwsCdkConstructLibrary({
   codeCov: true,
   defaultReleaseBranch: "main",
   description: "The serverless cost optimization bot",
+  bundledDeps: ["csv-parse@5.3.0", "@slack/webhook@6.1.0", "@slack/types"],
   devDeps: [
+    "@aws-sdk/client-s3@3.131.0",
+    "@aws-sdk/s3-request-presigner@3.135.0",
     "@commitlint/cli@17.0.2",
     "@commitlint/config-conventional@17.0.2",
     "cz-conventional-changelog@3.3.0",
     "husky@8.0.1",
     "lint-staged@13.0.1",
     "@types/jest@^27.5.2",
+    "@types/aws-lambda@8.10.101",
+    "aws-sdk-client-mock@1.0.0",
   ],
   eslintOptions: {
     prettier: true,

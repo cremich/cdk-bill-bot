@@ -4,6 +4,7 @@ import {
   aws_s3 as s3,
   aws_athena as athena,
   Names,
+  Stack,
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
@@ -11,6 +12,9 @@ import { Construct } from "constructs";
  * Properties for creating an AWS Cost and Usage data catalog
  */
 export interface CostAndUsageDataCatalogProps {
+  /**
+   * The S3 bucket that contains the cost and usage report
+   */
   readonly curBucket: s3.IBucket;
 }
 
@@ -41,6 +45,11 @@ export class CostAndUsageDataCatalog extends Construct {
    */
   public readonly athenaWorkgroup: athena.CfnWorkGroup;
 
+  /**
+   * The name of the AWS Glue database for your cost and usage data
+   */
+  public readonly glueDatabase: glue.CfnDatabase;
+
   constructor(
     scope: Construct,
     id: string,
@@ -68,6 +77,11 @@ export class CostAndUsageDataCatalog extends Construct {
       },
     });
 
+    this.glueDatabase = new glue.CfnDatabase(this, "database", {
+      catalogId: Stack.of(this).account,
+      databaseInput: {},
+    });
+
     this.crawler = new glue.CfnCrawler(this, "crawler", {
       role: glueRole.roleArn,
       name: Names.uniqueId(this),
@@ -87,7 +101,7 @@ export class CostAndUsageDataCatalog extends Construct {
           },
         ],
       },
-      databaseName: "db_" + Names.uniqueId(this),
+      databaseName: this.glueDatabase.ref,
       schemaChangePolicy: {
         updateBehavior: "UPDATE_IN_DATABASE",
         deleteBehavior: "LOG",
@@ -97,6 +111,9 @@ export class CostAndUsageDataCatalog extends Construct {
         CrawlerOutput: { Tables: { AddOrUpdateBehavior: "MergeNewColumns" } },
         Grouping: { TableGroupingPolicy: "CombineCompatibleSchemas" },
       }),
+      schedule: {
+        scheduleExpression: "cron(0 7 * * ? *)",
+      },
     });
 
     this.athenaBucket = new s3.Bucket(this, "athena-results", {
@@ -108,6 +125,7 @@ export class CostAndUsageDataCatalog extends Construct {
       name: Names.uniqueId(this),
       description: "Workgroup for Bill bot queries",
       state: "ENABLED",
+      recursiveDeleteOption: true,
       workGroupConfiguration: {
         resultConfiguration: {
           encryptionConfiguration: {

@@ -2,6 +2,154 @@
 
 ## Constructs <a name="Constructs" id="Constructs"></a>
 
+### BillTheBot <a name="BillTheBot" id="@cremich/cdk-bill-bot.BillTheBot"></a>
+
+L3 construct to create a new Bill Bot.
+
+#### Initializers <a name="Initializers" id="@cremich/cdk-bill-bot.BillTheBot.Initializer"></a>
+
+```typescript
+import { BillTheBot } from '@cremich/cdk-bill-bot'
+
+new BillTheBot(scope: Construct, id: string, props: BillProps)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.BillTheBot.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.BillTheBot.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.BillTheBot.Initializer.parameter.props">props</a></code> | <code><a href="#@cremich/cdk-bill-bot.BillProps">BillProps</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="@cremich/cdk-bill-bot.BillTheBot.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="@cremich/cdk-bill-bot.BillTheBot.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `props`<sup>Required</sup> <a name="props" id="@cremich/cdk-bill-bot.BillTheBot.Initializer.parameter.props"></a>
+
+- *Type:* <a href="#@cremich/cdk-bill-bot.BillProps">BillProps</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.BillTheBot.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="@cremich/cdk-bill-bot.BillTheBot.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.BillTheBot.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="@cremich/cdk-bill-bot.BillTheBot.isConstruct"></a>
+
+```typescript
+import { BillTheBot } from '@cremich/cdk-bill-bot'
+
+BillTheBot.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="@cremich/cdk-bill-bot.BillTheBot.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.BillTheBot.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#@cremich/cdk-bill-bot.BillTheBot.property.dailySpendsDigest">dailySpendsDigest</a></code> | <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest">DailySpendsDigest</a></code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.BillTheBot.property.datacatalog">datacatalog</a></code> | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog">CostAndUsageDataCatalog</a></code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.BillTheBot.property.report">report</a></code> | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageReport">CostAndUsageReport</a></code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="@cremich/cdk-bill-bot.BillTheBot.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `dailySpendsDigest`<sup>Required</sup> <a name="dailySpendsDigest" id="@cremich/cdk-bill-bot.BillTheBot.property.dailySpendsDigest"></a>
+
+```typescript
+public readonly dailySpendsDigest: DailySpendsDigest;
+```
+
+- *Type:* <a href="#@cremich/cdk-bill-bot.DailySpendsDigest">DailySpendsDigest</a>
+
+---
+
+##### `datacatalog`<sup>Required</sup> <a name="datacatalog" id="@cremich/cdk-bill-bot.BillTheBot.property.datacatalog"></a>
+
+```typescript
+public readonly datacatalog: CostAndUsageDataCatalog;
+```
+
+- *Type:* <a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog">CostAndUsageDataCatalog</a>
+
+---
+
+##### `report`<sup>Required</sup> <a name="report" id="@cremich/cdk-bill-bot.BillTheBot.property.report"></a>
+
+```typescript
+public readonly report: CostAndUsageReport;
+```
+
+- *Type:* <a href="#@cremich/cdk-bill-bot.CostAndUsageReport">CostAndUsageReport</a>
+
+---
+
+
 ### CostAndUsageDataCatalog <a name="CostAndUsageDataCatalog" id="@cremich/cdk-bill-bot.CostAndUsageDataCatalog"></a>
 
 A new cost and usage data catalog containing - an AWS Glue crawler - an Amazon Athena workgroup to query data - an S3 Bucket where Amazon Athena can write the results into.
@@ -105,6 +253,7 @@ Any object.
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.athenaWorkgroup">athenaWorkgroup</a></code> | <code>aws-cdk-lib.aws_athena.CfnWorkGroup</code> | The name of the Amazon Athena workgroup to query the data catalog. |
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.crawler">crawler</a></code> | <code>aws-cdk-lib.aws_glue.CfnCrawler</code> | The name of the AWS Glue crawler that creates the data catalog. |
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.curBucket">curBucket</a></code> | <code>aws-cdk-lib.aws_s3.IBucket</code> | The bucket where AWS delivers the report. |
+| <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.glueDatabase">glueDatabase</a></code> | <code>aws-cdk-lib.aws_glue.CfnDatabase</code> | The name of the AWS Glue database for your cost and usage data. |
 
 ---
 
@@ -165,6 +314,18 @@ public readonly curBucket: IBucket;
 - *Type:* aws-cdk-lib.aws_s3.IBucket
 
 The bucket where AWS delivers the report.
+
+---
+
+##### `glueDatabase`<sup>Required</sup> <a name="glueDatabase" id="@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.glueDatabase"></a>
+
+```typescript
+public readonly glueDatabase: CfnDatabase;
+```
+
+- *Type:* aws-cdk-lib.aws_glue.CfnDatabase
+
+The name of the AWS Glue database for your cost and usage data.
 
 ---
 
@@ -1405,7 +1566,176 @@ The region this bucket is provisioned.
 ---
 
 
+### DailySpendsDigest <a name="DailySpendsDigest" id="@cremich/cdk-bill-bot.DailySpendsDigest"></a>
+
+A new set of resources to provide a daily spends digest.
+
+#### Initializers <a name="Initializers" id="@cremich/cdk-bill-bot.DailySpendsDigest.Initializer"></a>
+
+```typescript
+import { DailySpendsDigest } from '@cremich/cdk-bill-bot'
+
+new DailySpendsDigest(scope: Construct, id: string, props: DailySpendsDigestProps)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.props">props</a></code> | <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigestProps">DailySpendsDigestProps</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `props`<sup>Required</sup> <a name="props" id="@cremich/cdk-bill-bot.DailySpendsDigest.Initializer.parameter.props"></a>
+
+- *Type:* <a href="#@cremich/cdk-bill-bot.DailySpendsDigestProps">DailySpendsDigestProps</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="@cremich/cdk-bill-bot.DailySpendsDigest.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="@cremich/cdk-bill-bot.DailySpendsDigest.isConstruct"></a>
+
+```typescript
+import { DailySpendsDigest } from '@cremich/cdk-bill-bot'
+
+DailySpendsDigest.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="@cremich/cdk-bill-bot.DailySpendsDigest.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.property.preparedStatement">preparedStatement</a></code> | <code>aws-cdk-lib.aws_athena.CfnPreparedStatement</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigest.property.stateMachine">stateMachine</a></code> | <code>aws-cdk-lib.aws_stepfunctions.StateMachine</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="@cremich/cdk-bill-bot.DailySpendsDigest.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `preparedStatement`<sup>Required</sup> <a name="preparedStatement" id="@cremich/cdk-bill-bot.DailySpendsDigest.property.preparedStatement"></a>
+
+```typescript
+public readonly preparedStatement: CfnPreparedStatement;
+```
+
+- *Type:* aws-cdk-lib.aws_athena.CfnPreparedStatement
+
+---
+
+##### `stateMachine`<sup>Required</sup> <a name="stateMachine" id="@cremich/cdk-bill-bot.DailySpendsDigest.property.stateMachine"></a>
+
+```typescript
+public readonly stateMachine: StateMachine;
+```
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.StateMachine
+
+---
+
+
 ## Structs <a name="Structs" id="Structs"></a>
+
+### BillProps <a name="BillProps" id="@cremich/cdk-bill-bot.BillProps"></a>
+
+Properties for creating Bill - the serverless cost optimization bot.
+
+#### Initializer <a name="Initializer" id="@cremich/cdk-bill-bot.BillProps.Initializer"></a>
+
+```typescript
+import { BillProps } from '@cremich/cdk-bill-bot'
+
+const billProps: BillProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.BillProps.property.slackWebHookUrl">slackWebHookUrl</a></code> | <code>string</code> | The URL of your Slack Webhook where Bill sends messages to. |
+
+---
+
+##### `slackWebHookUrl`<sup>Required</sup> <a name="slackWebHookUrl" id="@cremich/cdk-bill-bot.BillProps.property.slackWebHookUrl"></a>
+
+```typescript
+public readonly slackWebHookUrl: string;
+```
+
+- *Type:* string
+
+The URL of your Slack Webhook where Bill sends messages to.
+
+---
 
 ### CostAndUsageDataCatalogProps <a name="CostAndUsageDataCatalogProps" id="@cremich/cdk-bill-bot.CostAndUsageDataCatalogProps"></a>
 
@@ -1423,7 +1753,7 @@ const costAndUsageDataCatalogProps: CostAndUsageDataCatalogProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalogProps.property.curBucket">curBucket</a></code> | <code>aws-cdk-lib.aws_s3.IBucket</code> | *No description.* |
+| <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalogProps.property.curBucket">curBucket</a></code> | <code>aws-cdk-lib.aws_s3.IBucket</code> | The S3 bucket that contains the cost and usage report. |
 
 ---
 
@@ -1434,6 +1764,8 @@ public readonly curBucket: IBucket;
 ```
 
 - *Type:* aws-cdk-lib.aws_s3.IBucket
+
+The S3 bucket that contains the cost and usage report.
 
 ---
 
@@ -1896,6 +2228,54 @@ public readonly websiteRoutingRules: RoutingRule[];
 - *Default:* No redirection rules.
 
 Rules that define when a redirect is applied and the redirect behavior.
+
+---
+
+### DailySpendsDigestProps <a name="DailySpendsDigestProps" id="@cremich/cdk-bill-bot.DailySpendsDigestProps"></a>
+
+Properties for creating AWS resources to provide a daily spends digest analysis.
+
+#### Initializer <a name="Initializer" id="@cremich/cdk-bill-bot.DailySpendsDigestProps.Initializer"></a>
+
+```typescript
+import { DailySpendsDigestProps } from '@cremich/cdk-bill-bot'
+
+const dailySpendsDigestProps: DailySpendsDigestProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigestProps.property.datacatalog">datacatalog</a></code> | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog">CostAndUsageDataCatalog</a></code> | A reference to your cost and usage data catalog. |
+| <code><a href="#@cremich/cdk-bill-bot.DailySpendsDigestProps.property.slackWebHookUrl">slackWebHookUrl</a></code> | <code>string</code> | The Slack webhook URL to send report results to. |
+
+---
+
+##### `datacatalog`<sup>Required</sup> <a name="datacatalog" id="@cremich/cdk-bill-bot.DailySpendsDigestProps.property.datacatalog"></a>
+
+```typescript
+public readonly datacatalog: CostAndUsageDataCatalog;
+```
+
+- *Type:* <a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog">CostAndUsageDataCatalog</a>
+
+A reference to your cost and usage data catalog.
+
+---
+
+##### `slackWebHookUrl`<sup>Required</sup> <a name="slackWebHookUrl" id="@cremich/cdk-bill-bot.DailySpendsDigestProps.property.slackWebHookUrl"></a>
+
+```typescript
+public readonly slackWebHookUrl: string;
+```
+
+- *Type:* string
+
+The Slack webhook URL to send report results to.
+
+If this url is empty or invalid,
+the construct creation will fail with an error.
 
 ---
 

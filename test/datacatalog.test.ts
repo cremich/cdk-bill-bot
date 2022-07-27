@@ -44,11 +44,16 @@ describe("Report data catalog", () => {
       },
       Configuration:
         '{"Version":1,"CrawlerOutput":{"Tables":{"AddOrUpdateBehavior":"MergeNewColumns"}},"Grouping":{"TableGroupingPolicy":"CombineCompatibleSchemas"}}',
-      DatabaseName: "db_billbotcurcatalog",
+      DatabaseName: {
+        Ref: "billbotcurcatalogdatabase633FC613",
+      },
       Name: "billbotcurcatalog",
       SchemaChangePolicy: {
         DeleteBehavior: "LOG",
         UpdateBehavior: "UPDATE_IN_DATABASE",
+      },
+      Schedule: {
+        ScheduleExpression: "cron(0 7 * * ? *)",
       },
     });
   });
@@ -122,6 +127,7 @@ describe("Report data catalog", () => {
       Name: "billbotcurcatalog",
       Description: "Workgroup for Bill bot queries",
       State: "ENABLED",
+      RecursiveDeleteOption: true,
       WorkGroupConfiguration: {
         ResultConfiguration: {
           EncryptionConfiguration: {
