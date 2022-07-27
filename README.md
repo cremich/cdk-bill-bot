@@ -76,7 +76,7 @@ yarn add @cremich/cdk-bill-bot --save-dev
 
 If you want to try and checkout a default configuration of Bill, you can also launch the default Cloudformation template using the following launch button.
 
-[![launch cloudformation template](./docs/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=bill-bot-default&templateURL=https://cdk-bill-bot-default-template.s3.eu-central-1.amazonaws.com/bill-bot-default/latest/bill-bot-default.template.json)
+[![launch cloudformation template](./docs/cloudformation-launch-stack.png)](https://go.aws/3JaO2ig)
 
 The template contains a default configuration containing:
 
