@@ -157,6 +157,7 @@ describe("Daily spends digest", () => {
       },
     });
   });
+
   test("Construct creation failes if webhook is empty", () => {
     const datacatalog = new CostAndUsageDataCatalog(
       stack,
@@ -172,8 +173,9 @@ describe("Daily spends digest", () => {
           datacatalog: datacatalog,
           slackWebHookUrl: "",
         })
-    ).toThrow();
+    ).toThrow("slack webhook url  is invalid");
   });
+
   test("Construct creation failes if webhook is invalid", () => {
     const datacatalog = new CostAndUsageDataCatalog(
       stack,
@@ -189,7 +191,27 @@ describe("Daily spends digest", () => {
           datacatalog: datacatalog,
           slackWebHookUrl: "this-is-invalid",
         })
-    ).toThrow();
+    ).toThrow(`slack webhook url this-is-invalid is invalid`);
+  });
+
+  test("Webhook url is not validated in default template synth mode", () => {
+    process.env.BILL_DEFAULT_TEMPLATE_SYNTH_MODE = "true";
+    const datacatalog = new CostAndUsageDataCatalog(
+      stack,
+      "bill-bot-cur-catalog",
+      {
+        curBucket: new s3.Bucket(stack, "bucket"),
+      }
+    );
+
+    expect(
+      () =>
+        new DailySpendsDigest(stack, "daily-spends-digest", {
+          datacatalog: datacatalog,
+          slackWebHookUrl: "invalid-url",
+        })
+    ).not.toThrow("slack webhook url invalid-url is invalid");
+    delete process.env.BILL_DEFAULT_TEMPLATE_SYNTH_MODE;
   });
 
   test("Workflow is triggered once a day at 8am", async () => {

@@ -39,8 +39,10 @@ export class DailySpendsDigest extends Construct {
 
   constructor(scope: Construct, id: string, props: DailySpendsDigestProps) {
     super(scope, id);
-
-    if (!this.isSlackWebHookValid(props.slackWebHookUrl)) {
+    if (
+      !process.env.BILL_DEFAULT_TEMPLATE_SYNTH_MODE &&
+      !this.isSlackWebHookValid(props.slackWebHookUrl)
+    ) {
       throw Error(`slack webhook url ${props.slackWebHookUrl} is invalid`);
     }
 

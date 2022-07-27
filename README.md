@@ -50,7 +50,7 @@ Source: https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured
 - [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) (AWS CDK) installed
-- [Slack Webhook](https://api.slack.com/messaging/webhooks) created
+- [Slack Webhook](https://api.slack.com/messaging/webhooks) created.
 
 ## 🚀 Getting started
 
@@ -58,7 +58,7 @@ This Construct Library requires the AWS CDK v2 (>= 2.1.0). Please follow the [in
 
 ### Installation
 
-You can install Bill in two ways. Either using the CDK library package or by provisioning a default and pre-packaged Cloudformation template with your existing AWS accounts.
+You can install Bill in two ways. Either using the CDK library package or by provisioning a default and pre-packaged Cloudformation template within your existing AWS accounts.
 
 ### CDK Library for Typescript
 
@@ -72,7 +72,17 @@ yarn add @cremich/cdk-bill-bot --save-dev
 
 ### Cloudformation template
 
-TO BE ADDED
+If you want to try and checkout a default configuration of Bill, you can also launch the default Cloudformation template using the following launch button.
+
+[![launch cloudformation template](./docs/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=bill-bot-default&templateURL=https://cdk-bill-bot-default-template.s3.eu-central-1.amazonaws.com/bill-bot-default/latest/bill-bot-default.template.json)
+
+The template contains a default configuration containing:
+
+- A CUR export to Amazon S3
+- A CUR datacatalog to crawl your CUR using AWS Glue and analyze it via Amazon Athena
+- A daily spends digest analysis workflow based on AWS Step Functions.
+
+The only parameter that is needed to deploy the Cloudformation Stack, is a Slack Webhook URL where Bill sends the analysis results to. Please see the [Requirements](#📝-requirements) section for detailed instructions how to create a Slack Webhook.
 
 ## 🎉 Usage
 
