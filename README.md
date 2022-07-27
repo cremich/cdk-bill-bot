@@ -10,13 +10,9 @@
 
 This Construct Library provides L2 and L3 constructs for resources to build AWS Cost and Usage reports using the AWS Cloud Development Kit (CDK).
 
-☝️ Important: Bill uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied.
-
 ---
 
-**⚠️ This is an early alpha pre-release version. The API will be subject to change until the library reaches GA status. Therefore make sure you use an exact version in your `package.json` before it reaches 1.0.0.**
-
-**Please keep this warning in mind, if you already consider to use Bill in production environments!**
+**☝️ Important: Bill uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied.**
 
 ---
 
