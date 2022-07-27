@@ -6,7 +6,7 @@
 [![release](https://github.com/cremich/cdk-bill-bot/actions/workflows/release.yml/badge.svg)](https://github.com/cremich/cdk-bill-bot/actions/workflows/release.yml)
 [![codecov](https://codecov.io/gh/cremich/cdk-bill-bot/branch/main/graph/badge.svg?token=VFbFQQY6Qh)](https://codecov.io/gh/cremich/cdk-bill-bot)
 [![npm version](https://badge.fury.io/js/@cremich%2Fcdk-bill-bot.svg)](https://badge.fury.io/js/@cremich%2Fcdk-bill-bot)
-![EXPERIMENTAL](https://img.shields.io/badge/stability-experimantal-orange)
+![EXPERIMENTAL](https://img.shields.io/badge/stability-experimental-orange)
 
 This Construct Library provides L2 and L3 constructs for resources to build AWS Cost and Usage reports using the AWS Cloud Development Kit (CDK).
 
@@ -50,7 +50,7 @@ Source: https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured
 - [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) (AWS CDK) installed
-- [Slack Webhook](https://api.slack.com/messaging/webhooks) created.
+- [Slack Webhook](https://api.slack.com/messaging/webhooks) created. To speed up the process, Bill provides a [pre-configured app manifest](./docs/slack-app-manifest.yaml). Feel free to download and use it.
 
 ## 🚀 Getting started
 
@@ -83,6 +83,8 @@ The template contains a default configuration containing:
 - A daily spends digest analysis workflow based on AWS Step Functions.
 
 The only parameter that is needed to deploy the Cloudformation Stack, is a Slack Webhook URL where Bill sends the analysis results to. Please see the [Requirements](#📝-requirements) section for detailed instructions how to create a Slack Webhook.
+
+**Limitations:** as [CUR resources are only supported in `us-east-1`](https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/1020), the default template can only be provisioned in this region. If you need more flexibility, we recommend to build your own AWS CDK application and use the individual constructs.
 
 ## 🎉 Usage
 
