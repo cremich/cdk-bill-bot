@@ -88,7 +88,31 @@ The only parameter that is needed to deploy the Cloudformation Stack, is a Slack
 
 ## 🎉 Usage
 
-### Setup Cost and usage report export to S3
+### Using the "Bill the bot" L3 construct
+
+The fastest way to get started with Bill, is to use the L3 construct named `BillTheBot`. This construct creates a new bot configuration containing:
+
+- A CUR export to Amazon S3
+- A CUR datacatalog to crawl your CUR using AWS Glue and analyze it via Amazon Athena
+- A daily spends digest analysis workflow based on AWS Step Functions.
+
+```javascript
+import { BillTheBot } from "@cremich/cdk-bill-bot";
+
+new BillTheBot(stack, "bill-the-bot", {
+  slackWebHookUrl: "https://hooks.slack.com/services/WORKSPACE/CHANNEL/secret",
+});
+```
+
+The only property that is needed to use the construct, is a Slack Webhook URL where Bill sends the analysis results to. Please see the [Requirements](#📝-requirements) section for detailed instructions how to create a Slack Webhook.
+
+**Limitations:** as [CUR resources are only supported in `us-east-1`](https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/1020), the `BillTheBot` construct can only be provisioned in this region. If you need more flexibility, we recommend to build your own AWS CDK application and use the individual constructs in different `Stacks` like described in the following section.
+
+### Composing your own bot configuration
+
+If you need more flexibility, feel free to use the individual constructs to create your own setup. A detailed description and documentation about the available constructs and their API can be found in the [API documentation](./API.md).
+
+#### Setup Cost and usage report export to S3
 
 In order to receive cost and usage reports, you must have an Amazon S3 bucket in your AWS account to receive and store your reports. When using the `CostAndUsageReport` construct, an Amazon S3 Bucket is implicitly created for you.
 
@@ -119,7 +143,7 @@ new CostAndUsageReport(this, "cur", {
 });
 ```
 
-### Use AWS Glue to enable access to your report using Amazon Athena
+#### Use AWS Glue to enable access to your report using Amazon Athena
 
 After you created your report, you can provision a AWS Glue based data catalog for this. This enables Bill and you to analyze your cost and usage reports using Amazon Athena.
 
@@ -149,7 +173,7 @@ new CostAndUsageDataCatalog(this, "costs-catalog", {
 });
 ```
 
-### Daily spends digest
+#### Daily spends digest
 
 Bill is able to analyze your spends on a daily bases. Bill will calculate your total costs and send you a digest message via slack. You can enable the daily spends digest by using the following construct and connecting it with your cost and usage data catalog.
 

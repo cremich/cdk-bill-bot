@@ -1,0 +1,1003 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bill the bot Snapshot is compatible 1`] = `
+Object {
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": Object {
+    "billthebotcostsreportA722DA49": Object {
+      "Properties": Object {
+        "Compression": "Parquet",
+        "Format": "Parquet",
+        "RefreshClosedReports": true,
+        "ReportName": "billthebotcostsreport2EB6F8A3",
+        "ReportVersioning": "OVERWRITE_REPORT",
+        "S3Bucket": Object {
+          "Ref": "billthebotcostsreportbucket79AF5CEB",
+        },
+        "S3Prefix": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              "-cur",
+            ],
+          ],
+        },
+        "S3Region": Object {
+          "Ref": "AWS::Region",
+        },
+        "TimeUnit": "HOURLY",
+      },
+      "Type": "AWS::CUR::ReportDefinition",
+    },
+    "billthebotcostsreportbucket79AF5CEB": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "BucketEncryption": Object {
+          "ServerSideEncryptionConfiguration": Array [
+            Object {
+              "ServerSideEncryptionByDefault": Object {
+                "SSEAlgorithm": "AES256",
+              },
+            },
+          ],
+        },
+        "PublicAccessBlockConfiguration": Object {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "billthebotcostsreportbucketPolicy1F66C412": Object {
+      "Properties": Object {
+        "Bucket": Object {
+          "Ref": "billthebotcostsreportbucket79AF5CEB",
+        },
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "s3:*",
+              "Condition": Object {
+                "Bool": Object {
+                  "aws:SecureTransport": "false",
+                },
+              },
+              "Effect": "Deny",
+              "Principal": Object {
+                "AWS": "*",
+              },
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "billthebotcostsreportbucket79AF5CEB",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "billthebotcostsreportbucket79AF5CEB",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "s3:GetBucketAcl",
+                "s3:GetBucketPolicy",
+              ],
+              "Condition": Object {
+                "StringEquals": Object {
+                  "aws:SourceAccount": Object {
+                    "Ref": "AWS::AccountId",
+                  },
+                  "aws:SourceArn": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:cur:us-east-1:",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":definition/*",
+                      ],
+                    ],
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "billingreports.amazonaws.com",
+              },
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "billthebotcostsreportbucket79AF5CEB",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": "s3:PutObject",
+              "Condition": Object {
+                "StringEquals": Object {
+                  "aws:SourceAccount": Object {
+                    "Ref": "AWS::AccountId",
+                  },
+                  "aws:SourceArn": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:cur:us-east-1:",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":definition/*",
+                      ],
+                    ],
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "billingreports.amazonaws.com",
+              },
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    Object {
+                      "Fn::GetAtt": Array [
+                        "billthebotcostsreportbucket79AF5CEB",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "billthebotcostsreportcatalogathenaresultsDC07A1D7": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "BucketEncryption": Object {
+          "ServerSideEncryptionConfiguration": Array [
+            Object {
+              "ServerSideEncryptionByDefault": Object {
+                "SSEAlgorithm": "AES256",
+              },
+            },
+          ],
+        },
+        "PublicAccessBlockConfiguration": Object {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "billthebotcostsreportcatalogcrawlerA29D55C4": Object {
+      "Properties": Object {
+        "Configuration": "{\\"Version\\":1,\\"CrawlerOutput\\":{\\"Tables\\":{\\"AddOrUpdateBehavior\\":\\"MergeNewColumns\\"}},\\"Grouping\\":{\\"TableGroupingPolicy\\":\\"CombineCompatibleSchemas\\"}}",
+        "DatabaseName": Object {
+          "Ref": "billthebotcostsreportcatalogdatabase11DB4765",
+        },
+        "Name": "billthebotcostsreportcatalogF0071175",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "billthebotcostsreportcataloggluerole41E97113",
+            "Arn",
+          ],
+        },
+        "Schedule": Object {
+          "ScheduleExpression": "cron(0 7 * * ? *)",
+        },
+        "SchemaChangePolicy": Object {
+          "DeleteBehavior": "LOG",
+          "UpdateBehavior": "UPDATE_IN_DATABASE",
+        },
+        "Targets": Object {
+          "S3Targets": Array [
+            Object {
+              "Exclusions": Array [
+                "**.json",
+                "**.yml",
+                "**.sql,",
+                "**.csv",
+                "**.gz",
+                "**.zip",
+                "**/cost_and_usage_data_status/*",
+              ],
+              "Path": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "s3://",
+                    Object {
+                      "Ref": "billthebotcostsreportbucket79AF5CEB",
+                    },
+                  ],
+                ],
+              },
+            },
+          ],
+        },
+      },
+      "Type": "AWS::Glue::Crawler",
+    },
+    "billthebotcostsreportcatalogdatabase11DB4765": Object {
+      "Properties": Object {
+        "CatalogId": Object {
+          "Ref": "AWS::AccountId",
+        },
+        "DatabaseInput": Object {},
+      },
+      "Type": "AWS::Glue::Database",
+    },
+    "billthebotcostsreportcataloggluerole41E97113": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "glue.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSGlueServiceRole",
+              ],
+            ],
+          },
+        ],
+        "Policies": Array [
+          Object {
+            "PolicyDocument": Object {
+              "Statement": Array [
+                Object {
+                  "Action": Array [
+                    "s3:GetObject",
+                    "s3:PutObject",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        Object {
+                          "Fn::GetAtt": Array [
+                            "billthebotcostsreportbucket79AF5CEB",
+                            "Arn",
+                          ],
+                        },
+                        "/*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "curDataBucketAccess",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "billthebotcostsreportcatalogworkgroupE08827C4": Object {
+      "Properties": Object {
+        "Description": "Workgroup for Bill bot queries",
+        "Name": "billthebotcostsreportcatalogF0071175",
+        "RecursiveDeleteOption": true,
+        "State": "ENABLED",
+        "WorkGroupConfiguration": Object {
+          "ResultConfiguration": Object {
+            "EncryptionConfiguration": Object {
+              "EncryptionOption": "SSE_S3",
+            },
+            "OutputLocation": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "s3://",
+                  Object {
+                    "Ref": "billthebotcostsreportcatalogathenaresultsDC07A1D7",
+                  },
+                  "/",
+                ],
+              ],
+            },
+          },
+        },
+      },
+      "Type": "AWS::Athena::WorkGroup",
+    },
+    "billthebotdailyspendsdigestdailyspendsED869FBE": Object {
+      "DependsOn": Array [
+        "billthebotcostsreportcatalogworkgroupE08827C4",
+      ],
+      "Properties": Object {
+        "QueryStatement": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "SELECT 
+    DATE_FORMAT((line_item_usage_start_date),'%Y-%m-%d') AS usage_start_date,
+    bill_bill_type as bill_type,
+    CASE
+      WHEN (line_item_line_item_type = 'Usage' AND product_product_family = 'Data Transfer') THEN CONCAT('DataTransfer - ',product_product_name) 
+      ELSE product_product_name
+    END AS service_name,
+    product_location as region,
+    line_item_line_item_description as usage_description,
+    SUM(CAST(line_item_usage_amount AS DECIMAL(16,8))) AS total_usage,
+    SUM(CAST(line_item_unblended_cost AS DECIMAL(16,8))) AS total_costs,
+    bill_payer_account_id as payer_account_id,
+    line_item_usage_account_id as usage_account_id
+  FROM 
+      \\"",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              "_cur\\"
+  WHERE
+    DATE_FORMAT((line_item_usage_start_date),'%Y-%m-%d') = ? AND
+    line_item_line_item_type  LIKE '%Usage%'
+  GROUP BY
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9
+  HAVING SUM(CAST(line_item_unblended_cost AS DECIMAL(16,8))) > 0.00000000
+  ORDER BY 
+    7",
+            ],
+          ],
+        },
+        "StatementName": "billthebotdailyspendsdigest80F4BFD3",
+        "WorkGroup": "billthebotcostsreportcatalogF0071175",
+      },
+      "Type": "AWS::Athena::PreparedStatement",
+    },
+    "billthebotdailyspendsdigestdigestslackmessage1EA2A43F": Object {
+      "DependsOn": Array [
+        "billthebotdailyspendsdigestdigestslackmessageServiceRoleDefaultPolicyD3420452",
+        "billthebotdailyspendsdigestdigestslackmessageServiceRole1CE5D95F",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "e62a975b295bcd354e448650ea34b91eb0a0a32d94d3dfff339d26ee97786a87.zip",
+        },
+        "Description": "src/daily-spends/digest-slack-notification.lambda.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "WEBHOOK_URL": "https://hooks.slack.com/services/WORKSPACE/CHANNEL/secret",
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "billthebotdailyspendsdigestdigestslackmessageServiceRole1CE5D95F",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "billthebotdailyspendsdigestdigestslackmessageServiceRole1CE5D95F": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "billthebotdailyspendsdigestdigestslackmessageServiceRoleDefaultPolicyD3420452": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "billthebotcostsreportcatalogathenaresultsDC07A1D7",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "billthebotcostsreportcatalogathenaresultsDC07A1D7",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "billthebotdailyspendsdigestdigestslackmessageServiceRoleDefaultPolicyD3420452",
+        "Roles": Array [
+          Object {
+            "Ref": "billthebotdailyspendsdigestdigestslackmessageServiceRole1CE5D95F",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "billthebotdailyspendsdigestschedule7943D6E3": Object {
+      "Properties": Object {
+        "ScheduleExpression": "cron(0 8 * * ? *)",
+        "State": "ENABLED",
+        "Targets": Array [
+          Object {
+            "Arn": Object {
+              "Ref": "billthebotdailyspendsdigestworkflowFDC17573",
+            },
+            "Id": "Target0",
+            "RoleArn": Object {
+              "Fn::GetAtt": Array [
+                "billthebotdailyspendsdigestworkflowEventsRole78710099",
+                "Arn",
+              ],
+            },
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+    "billthebotdailyspendsdigestworkflowEventsRole78710099": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "events.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "billthebotdailyspendsdigestworkflowEventsRoleDefaultPolicy2B5A53DB": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "states:StartExecution",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "billthebotdailyspendsdigestworkflowFDC17573",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "billthebotdailyspendsdigestworkflowEventsRoleDefaultPolicy2B5A53DB",
+        "Roles": Array [
+          Object {
+            "Ref": "billthebotdailyspendsdigestworkflowEventsRole78710099",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "billthebotdailyspendsdigestworkflowFDC17573": Object {
+      "DependsOn": Array [
+        "billthebotdailyspendsdigestworkflowRoleDefaultPolicyBB57AE7A",
+        "billthebotdailyspendsdigestworkflowRole4BB733B1",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"Get yesterday's date\\",\\"States\\":{\\"Get yesterday's date\\":{\\"Next\\":\\"Start Athena Query\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "billthebotdailyspendsdigestyesterdayD83113E4",
+                  "Arn",
+                ],
+              },
+              "\\",\\"Payload.$\\":\\"$\\"}},\\"Start Athena Query\\":{\\"Next\\":\\"Get query result\\",\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::athena:startQueryExecution\\",\\"Parameters\\":{\\"QueryString.$\\":\\"States.Format('EXECUTE billthebotdailyspendsdigest80F4BFD3 USING \\\\\\\\'{}\\\\\\\\'', $.Payload)\\",\\"QueryExecutionContext\\":{\\"Database\\":\\"",
+              Object {
+                "Ref": "billthebotcostsreportcatalogdatabase11DB4765",
+              },
+              "\\"},\\"ResultConfiguration\\":{},\\"WorkGroup\\":\\"billthebotcostsreportcatalogF0071175\\"}},\\"Get query result\\":{\\"Next\\":\\"Has query finished?\\",\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::athena:getQueryExecution\\",\\"Parameters\\":{\\"QueryExecutionId.$\\":\\"$.QueryExecutionId\\"}},\\"Transform execution input\\":{\\"Type\\":\\"Pass\\",\\"OutputPath\\":\\"$.QueryExecution\\",\\"Next\\":\\"Get query result\\"},\\"Wait for query result\\":{\\"Type\\":\\"Wait\\",\\"Seconds\\":5,\\"Next\\":\\"Transform execution input\\"},\\"Has query finished?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.QueryExecution.Status.State\\",\\"StringEquals\\":\\"SUCCEEDED\\",\\"Next\\":\\"Build slack message\\"},{\\"Variable\\":\\"$.QueryExecution.Status.State\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"Query failed\\"},{\\"Variable\\":\\"$.QueryExecution.Status.State\\",\\"StringEquals\\":\\"CANCELLED\\",\\"Next\\":\\"Query cancelled\\"}],\\"Default\\":\\"Wait for query result\\"},\\"Build slack message\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "billthebotdailyspendsdigestdigestslackmessage1EA2A43F",
+                  "Arn",
+                ],
+              },
+              "\\",\\"Payload\\":{\\"resultLocation.$\\":\\"$.QueryExecution.ResultConfiguration.OutputLocation\\",\\"queryType\\":\\"DAILY_SPENDS\\"}}},\\"Query failed\\":{\\"Type\\":\\"Fail\\"},\\"Query cancelled\\":{\\"Type\\":\\"Fail\\"}}}",
+            ],
+          ],
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "billthebotdailyspendsdigestworkflowRole4BB733B1",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+    },
+    "billthebotdailyspendsdigestworkflowRole4BB733B1": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "states.",
+                      Object {
+                        "Ref": "AWS::Region",
+                      },
+                      ".amazonaws.com",
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "billthebotdailyspendsdigestworkflowRoleDefaultPolicyBB57AE7A": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "billthebotdailyspendsdigestyesterdayD83113E4",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "athena:getDataCatalog",
+                "athena:startQueryExecution",
+                "athena:getQueryExecution",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":athena:",
+                      Object {
+                        "Ref": "AWS::Region",
+                      },
+                      ":",
+                      Object {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":datacatalog/AwsDataCatalog",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":athena:",
+                      Object {
+                        "Ref": "AWS::Region",
+                      },
+                      ":",
+                      Object {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":workgroup/billthebotcostsreportcatalogF0071175",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "s3:CreateBucket",
+                "s3:ListBucket",
+                "s3:GetBucketLocation",
+                "s3:GetObject",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "s3:AbortMultipartUpload",
+                "s3:ListBucketMultipartUploads",
+                "s3:ListMultipartUploadParts",
+                "s3:PutObject",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "lakeformation:GetDataAccess",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "glue:BatchCreatePartition",
+                "glue:BatchDeletePartition",
+                "glue:BatchDeleteTable",
+                "glue:BatchGetPartition",
+                "glue:CreateDatabase",
+                "glue:CreatePartition",
+                "glue:CreateTable",
+                "glue:DeleteDatabase",
+                "glue:DeletePartition",
+                "glue:DeleteTable",
+                "glue:GetDatabase",
+                "glue:GetDatabases",
+                "glue:GetPartition",
+                "glue:GetPartitions",
+                "glue:GetTable",
+                "glue:GetTables",
+                "glue:UpdateDatabase",
+                "glue:UpdatePartition",
+                "glue:UpdateTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":glue:",
+                      Object {
+                        "Ref": "AWS::Region",
+                      },
+                      ":",
+                      Object {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":catalog",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":glue:",
+                      Object {
+                        "Ref": "AWS::Region",
+                      },
+                      ":",
+                      Object {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":database/",
+                      Object {
+                        "Ref": "billthebotcostsreportcatalogdatabase11DB4765",
+                      },
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":glue:",
+                      Object {
+                        "Ref": "AWS::Region",
+                      },
+                      ":",
+                      Object {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":table/",
+                      Object {
+                        "Ref": "billthebotcostsreportcatalogdatabase11DB4765",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":glue:",
+                      Object {
+                        "Ref": "AWS::Region",
+                      },
+                      ":",
+                      Object {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":userDefinedFunction/",
+                      Object {
+                        "Ref": "billthebotcostsreportcatalogdatabase11DB4765",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "athena:getQueryExecution",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "billthebotdailyspendsdigestdigestslackmessage1EA2A43F",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": "athena:GetPreparedStatement",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":athena:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":workgroup/billthebotcostsreportcatalogF0071175",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "billthebotdailyspendsdigestworkflowRoleDefaultPolicyBB57AE7A",
+        "Roles": Array [
+          Object {
+            "Ref": "billthebotdailyspendsdigestworkflowRole4BB733B1",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "billthebotdailyspendsdigestyesterdayD83113E4": Object {
+      "DependsOn": Array [
+        "billthebotdailyspendsdigestyesterdayServiceRole6C375920",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "ec462199c745061fb42057611e28a69c22ebb90a308425f16eed7f7d4fec1d4e.zip",
+        },
+        "Description": "src/daily-spends/yesterday.lambda.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "billthebotdailyspendsdigestyesterdayServiceRole6C375920",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "billthebotdailyspendsdigestyesterdayServiceRole6C375920": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
