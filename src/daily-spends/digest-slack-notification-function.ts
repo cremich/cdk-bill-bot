@@ -17,7 +17,7 @@ export class DigestSlackNotificationFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/daily-spends/digest-slack-notification.lambda.ts',
       ...props,
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/daily-spends/digest-slack-notification.lambda')),
     });
