@@ -235,6 +235,7 @@ Object {
                 "**.gz",
                 "**.zip",
                 "**/cost_and_usage_data_status/*",
+                "**test-object",
               ],
               "Path": Object {
                 "Fn::Join": Array [
@@ -412,7 +413,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "ce052068f244c494be0ed404da2d1e7996951ccaf6611458b93325fd42f6209c.zip",
+          "S3Key": "0ae15768ce0bd7537109964bbf73137021e5b1c520116ee767ec3a0a5b21fa87.zip",
         },
         "Description": "src/daily-spends/digest-slack-notification.lambda.ts",
         "Environment": Object {
@@ -921,7 +922,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "99b74092f6c77629b5bcdfd9c0289e9ba9c28ad7a566dd98747bfe0f74218807.zip",
+          "S3Key": "ec462199c745061fb42057611e28a69c22ebb90a308425f16eed7f7d4fec1d4e.zip",
         },
         "Description": "src/daily-spends/yesterday.lambda.ts",
         "Environment": Object {

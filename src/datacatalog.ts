@@ -97,6 +97,7 @@ export class CostAndUsageDataCatalog extends Construct {
               "**.gz",
               "**.zip",
               "**/cost_and_usage_data_status/*",
+              "**test-object",
             ],
           },
         ],

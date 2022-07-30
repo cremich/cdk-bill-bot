@@ -168,6 +168,7 @@ describe("Report", () => {
               "**.gz",
               "**.zip",
               "**/cost_and_usage_data_status/*",
+              "**test-object",
             ],
             Path: {
               "Fn::Join": [
