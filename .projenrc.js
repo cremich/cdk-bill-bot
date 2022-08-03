@@ -49,5 +49,6 @@ const project = new awscdk.AwsCdkConstructLibrary({
     prepush: "npm run test",
     prepare: "husky install",
   },
+  gitignore: ["src/dev", "cdk.out"],
 });
 project.synth();
