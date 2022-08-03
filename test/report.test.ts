@@ -178,6 +178,11 @@ describe("Report", () => {
                   {
                     Ref: "CurbucketDC19903D",
                   },
+                  "/",
+                  {
+                    Ref: "AWS::AccountId",
+                  },
+                  "-cur/",
                 ],
               ],
             },

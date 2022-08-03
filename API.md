@@ -254,6 +254,7 @@ Any object.
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.crawler">crawler</a></code> | <code>aws-cdk-lib.aws_glue.CfnCrawler</code> | The name of the AWS Glue crawler that creates the data catalog. |
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.curBucket">curBucket</a></code> | <code>aws-cdk-lib.aws_s3.IBucket</code> | The bucket where AWS delivers the report. |
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.glueDatabase">glueDatabase</a></code> | <code>aws-cdk-lib.aws_glue.CfnDatabase</code> | The name of the AWS Glue database for your cost and usage data. |
+| <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.glueTableName">glueTableName</a></code> | <code>string</code> | The name of the AWS Glue table to query your cost and usage data. |
 
 ---
 
@@ -326,6 +327,18 @@ public readonly glueDatabase: CfnDatabase;
 - *Type:* aws-cdk-lib.aws_glue.CfnDatabase
 
 The name of the AWS Glue database for your cost and usage data.
+
+---
+
+##### `glueTableName`<sup>Required</sup> <a name="glueTableName" id="@cremich/cdk-bill-bot.CostAndUsageDataCatalog.property.glueTableName"></a>
+
+```typescript
+public readonly glueTableName: string;
+```
+
+- *Type:* string
+
+The name of the AWS Glue table to query your cost and usage data.
 
 ---
 
@@ -1754,6 +1767,7 @@ const costAndUsageDataCatalogProps: CostAndUsageDataCatalogProps = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalogProps.property.curBucket">curBucket</a></code> | <code>aws-cdk-lib.aws_s3.IBucket</code> | The S3 bucket that contains the cost and usage report. |
+| <code><a href="#@cremich/cdk-bill-bot.CostAndUsageDataCatalogProps.property.reportPathPrefix">reportPathPrefix</a></code> | <code>string</code> | The S3 report path prefix. |
 
 ---
 
@@ -1766,6 +1780,24 @@ public readonly curBucket: IBucket;
 - *Type:* aws-cdk-lib.aws_s3.IBucket
 
 The S3 bucket that contains the cost and usage report.
+
+---
+
+##### `reportPathPrefix`<sup>Optional</sup> <a name="reportPathPrefix" id="@cremich/cdk-bill-bot.CostAndUsageDataCatalogProps.property.reportPathPrefix"></a>
+
+```typescript
+public readonly reportPathPrefix: string;
+```
+
+- *Type:* string
+
+The S3 report path prefix.
+
+If not provided, we will fallback to a default of <account_id>_cur.
+This value will influence where to crawl the data to prevent creating too many tables as well as
+the final name of the Glue table that is created
+
+> [https://docs.aws.amazon.com/cur/latest/userguide/cur-create.html](https://docs.aws.amazon.com/cur/latest/userguide/cur-create.html)
 
 ---
 

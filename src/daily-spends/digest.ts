@@ -51,7 +51,9 @@ export class DailySpendsDigest extends Construct {
       "daily-spends",
       {
         statementName: Names.uniqueId(this),
-        queryStatement: this.getDailySpendsQuery(),
+        queryStatement: this.getDailySpendsQuery(
+          props.datacatalog.glueTableName
+        ),
         workGroup: props.datacatalog.athenaWorkgroup.name,
       }
     );
@@ -176,7 +178,7 @@ export class DailySpendsDigest extends Construct {
     return stateMachine;
   }
 
-  private getDailySpendsQuery(): string {
+  private getDailySpendsQuery(tableName: string): string {
     return `SELECT 
     DATE_FORMAT((line_item_usage_start_date),'%Y-%m-%d') AS usage_start_date,
     bill_bill_type as bill_type,
@@ -191,7 +193,7 @@ export class DailySpendsDigest extends Construct {
     bill_payer_account_id as payer_account_id,
     line_item_usage_account_id as usage_account_id
   FROM 
-      "${Stack.of(this).account}_cur"
+      "${tableName.replace(/-/g, "_")}"
   WHERE
     DATE_FORMAT((line_item_usage_start_date),'%Y-%m-%d') = ? AND
     line_item_line_item_type  LIKE '%Usage%'

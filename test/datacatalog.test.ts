@@ -37,6 +37,11 @@ describe("Report data catalog", () => {
                   {
                     Ref: "bucket43879C71",
                   },
+                  "/",
+                  {
+                    Ref: "AWS::AccountId",
+                  },
+                  "-cur/",
                 ],
               ],
             },
@@ -55,6 +60,47 @@ describe("Report data catalog", () => {
       },
       Schedule: {
         ScheduleExpression: "cron(0 7 * * ? *)",
+      },
+    });
+  });
+
+  test("Glue crawler is created with custom prefix", () => {
+    new CostAndUsageDataCatalog(stack, "bill-bot-cur-catalog", {
+      curBucket: new s3.Bucket(stack, "bucket"),
+      reportPathPrefix: "cdk-bill-bot",
+    });
+    const assert = assertions.Template.fromStack(stack);
+    assert.hasResourceProperties("AWS::Glue::Crawler", {
+      Role: {
+        "Fn::GetAtt": ["billbotcurcataloggluerole50C049D8", "Arn"],
+      },
+      Targets: {
+        S3Targets: [
+          {
+            Exclusions: [
+              "**.json",
+              "**.yml",
+              "**.sql,",
+              "**.csv",
+              "**.gz",
+              "**.zip",
+              "**/cost_and_usage_data_status/*",
+              "**test-object",
+            ],
+            Path: {
+              "Fn::Join": [
+                "",
+                [
+                  "s3://",
+                  {
+                    Ref: "bucket43879C71",
+                  },
+                  "/cdk-bill-bot/",
+                ],
+              ],
+            },
+          },
+        ],
       },
     });
   });

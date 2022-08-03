@@ -245,6 +245,11 @@ Object {
                     Object {
                       "Ref": "billthebotcostsreportbucket79AF5CEB",
                     },
+                    "/",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    "-cur/",
                   ],
                 ],
               },
