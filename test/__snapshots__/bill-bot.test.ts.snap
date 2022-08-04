@@ -235,6 +235,7 @@ Object {
                 "**.gz",
                 "**.zip",
                 "**/cost_and_usage_data_status/*",
+                "**test-object",
               ],
               "Path": Object {
                 "Fn::Join": Array [
@@ -244,6 +245,11 @@ Object {
                     Object {
                       "Ref": "billthebotcostsreportbucket79AF5CEB",
                     },
+                    "/",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    "-cur/",
                   ],
                 ],
               },

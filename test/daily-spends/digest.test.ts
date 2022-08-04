@@ -8,6 +8,32 @@ describe("Daily spends digest", () => {
   beforeEach(() => {
     stack = new Stack();
   });
+
+  test("Verify prepared statement with custom report prefix", async () => {
+    const datacatalog = new CostAndUsageDataCatalog(
+      stack,
+      "bill-bot-cur-catalog",
+      {
+        curBucket: new s3.Bucket(stack, "bucket"),
+        reportPathPrefix: "cdk-bill-bot",
+      }
+    );
+
+    new DailySpendsDigest(stack, "daily-spends-digest", {
+      datacatalog: datacatalog,
+      slackWebHookUrl:
+        "https://hooks.slack.com/services/WORKSPACE/CHANNEL/ran0omI3",
+    });
+
+    const assert = assertions.Template.fromStack(stack);
+    assert.hasResourceProperties("AWS::Athena::PreparedStatement", {
+      QueryStatement:
+        "SELECT \n    DATE_FORMAT((line_item_usage_start_date),'%Y-%m-%d') AS usage_start_date,\n    bill_bill_type as bill_type,\n    CASE\n      WHEN (line_item_line_item_type = 'Usage' AND product_product_family = 'Data Transfer') THEN CONCAT('DataTransfer - ',product_product_name) \n      ELSE product_product_name\n    END AS service_name,\n    product_location as region,\n    line_item_line_item_description as usage_description,\n    SUM(CAST(line_item_usage_amount AS DECIMAL(16,8))) AS total_usage,\n    SUM(CAST(line_item_unblended_cost AS DECIMAL(16,8))) AS total_costs,\n    bill_payer_account_id as payer_account_id,\n    line_item_usage_account_id as usage_account_id\n  FROM \n      \"cdk_bill_bot\"\n  WHERE\n    DATE_FORMAT((line_item_usage_start_date),'%Y-%m-%d') = ? AND\n    line_item_line_item_type  LIKE '%Usage%'\n  GROUP BY\n    1,\n    2,\n    3,\n    4,\n    5,\n    8,\n    9\n  HAVING SUM(CAST(line_item_unblended_cost AS DECIMAL(16,8))) > 0.00000000\n  ORDER BY \n    7",
+      StatementName: "dailyspendsdigest",
+      WorkGroup: "billbotcurcatalog",
+    });
+  });
+
   test("Verify prepared statement is created", async () => {
     const datacatalog = new CostAndUsageDataCatalog(
       stack,

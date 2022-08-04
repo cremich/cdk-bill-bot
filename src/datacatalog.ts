@@ -16,6 +16,15 @@ export interface CostAndUsageDataCatalogProps {
    * The S3 bucket that contains the cost and usage report
    */
   readonly curBucket: s3.IBucket;
+
+  /**
+   * The S3 report path prefix. If not provided, we will fallback to a default of <account_id>_cur.
+   * This value will influence where to crawl the data to prevent creating too many tables as well as
+   * the final name of the Glue table that is created
+   *
+   * @see https://docs.aws.amazon.com/cur/latest/userguide/cur-create.html
+   */
+  readonly reportPathPrefix?: string;
 }
 
 /**
@@ -50,6 +59,11 @@ export class CostAndUsageDataCatalog extends Construct {
    */
   public readonly glueDatabase: glue.CfnDatabase;
 
+  /**
+   * The name of the AWS Glue table to query your cost and usage data
+   */
+  public readonly glueTableName: string;
+
   constructor(
     scope: Construct,
     id: string,
@@ -82,13 +96,17 @@ export class CostAndUsageDataCatalog extends Construct {
       databaseInput: {},
     });
 
+    const prefix = props.reportPathPrefix
+      ? props.reportPathPrefix
+      : `${Stack.of(this).account}-cur`;
+
     this.crawler = new glue.CfnCrawler(this, "crawler", {
       role: glueRole.roleArn,
       name: Names.uniqueId(this),
       targets: {
         s3Targets: [
           {
-            path: `s3://${this.curBucket.bucketName}`,
+            path: `s3://${this.curBucket.bucketName}/${prefix}/`,
             exclusions: [
               "**.json",
               "**.yml",
@@ -97,6 +115,7 @@ export class CostAndUsageDataCatalog extends Construct {
               "**.gz",
               "**.zip",
               "**/cost_and_usage_data_status/*",
+              "**test-object",
             ],
           },
         ],
@@ -115,6 +134,8 @@ export class CostAndUsageDataCatalog extends Construct {
         scheduleExpression: "cron(0 7 * * ? *)",
       },
     });
+
+    this.glueTableName = prefix;
 
     this.athenaBucket = new s3.Bucket(this, "athena-results", {
       encryption: s3.BucketEncryption.S3_MANAGED,

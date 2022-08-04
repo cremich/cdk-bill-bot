@@ -168,6 +168,7 @@ describe("Report", () => {
               "**.gz",
               "**.zip",
               "**/cost_and_usage_data_status/*",
+              "**test-object",
             ],
             Path: {
               "Fn::Join": [
@@ -177,6 +178,11 @@ describe("Report", () => {
                   {
                     Ref: "CurbucketDC19903D",
                   },
+                  "/",
+                  {
+                    Ref: "AWS::AccountId",
+                  },
+                  "-cur/",
                 ],
               ],
             },
