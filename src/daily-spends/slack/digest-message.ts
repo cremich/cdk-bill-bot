@@ -5,7 +5,7 @@ import {
   SectionBlock,
   DividerBlock,
 } from "@slack/types";
-import { DailySpendsReport } from "./report";
+import { DailySpendsReport } from "../report";
 
 /**
  * A new digest slack notification for your associated daily spends report.

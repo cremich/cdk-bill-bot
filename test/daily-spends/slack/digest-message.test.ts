@@ -1,5 +1,5 @@
-import { DailySpendsDigestSlackNotification } from "../../src/daily-spends/digest-slack-message";
-import { DailySpendsReport } from "../../src/daily-spends/report";
+import { DailySpendsReport } from "../../../src/daily-spends/report";
+import { DailySpendsDigestSlackNotification } from "../../../src/daily-spends/slack/digest-message";
 
 const reportRows = [
   {

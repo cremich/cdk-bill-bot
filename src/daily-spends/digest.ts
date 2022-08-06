@@ -11,7 +11,7 @@ import {
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { CostAndUsageDataCatalog } from "..";
-import { DigestSlackNotificationFunction } from "./digest-slack-notification-function";
+import { DigestNotificationFunction } from "./slack/digest-notification-function";
 import { YesterdayFunction } from "./yesterday-function";
 
 /**
@@ -67,7 +67,7 @@ export class DailySpendsDigest extends Construct {
     preparedStatement: athena.CfnPreparedStatement
   ): sfn.StateMachine {
     const yesterdayFunction = new YesterdayFunction(this, "yesterday");
-    const slackMessageFunction = new DigestSlackNotificationFunction(
+    const slackMessageFunction = new DigestNotificationFunction(
       this,
       "digest-slack-message",
       {

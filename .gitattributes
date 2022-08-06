@@ -20,7 +20,7 @@
 /API.md linguist-generated
 /LICENSE linguist-generated
 /package.json linguist-generated
-/src/daily-spends/digest-slack-notification-function.ts linguist-generated
+/src/daily-spends/slack/digest-notification-function.ts linguist-generated
 /src/daily-spends/yesterday-function.ts linguist-generated
 /tsconfig.dev.json linguist-generated
 /yarn.lock linguist-generated

@@ -15,7 +15,7 @@
     ".projen/files.json",
     ".projen/tasks.json",
     "LICENSE",
-    "src/daily-spends/digest-slack-notification-function.ts",
+    "src/daily-spends/slack/digest-notification-function.ts",
     "src/daily-spends/yesterday-function.ts",
     "tsconfig.dev.json"
   ],

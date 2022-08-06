@@ -1,4 +1,4 @@
-import { ErrorSlackNotification } from "../../src/daily-spends/error-slack-message";
+import { ErrorSlackNotification } from "../../../src/daily-spends/slack/error-message";
 
 describe("Digest error notification", () => {
   test("Verify error message", async () => {
