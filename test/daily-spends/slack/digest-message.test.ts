@@ -1,5 +1,5 @@
-import { DailySpendsDigestSlackNotification } from "../../src/daily-spends/digest-slack-message";
-import { DailySpendsReport } from "../../src/daily-spends/report";
+import { DailySpendsReport } from "../../../src/daily-spends/report";
+import { DailySpendsDigestMessage } from "../../../src/daily-spends/slack/digest-message";
 
 const reportRows = [
   {
@@ -63,7 +63,7 @@ describe("Digest slack notification", () => {
     ];
 
     const report = new DailySpendsReport(reportRows);
-    const message = new DailySpendsDigestSlackNotification(report);
+    const message = new DailySpendsDigestMessage(report);
     expect(message.buildSlackMessage()).toEqual(expectedBlocks);
   });
 
@@ -94,7 +94,7 @@ describe("Digest slack notification", () => {
     ];
 
     const report = new DailySpendsReport([]);
-    const message = new DailySpendsDigestSlackNotification(report);
+    const message = new DailySpendsDigestMessage(report);
     expect(message.buildSlackMessage()).toEqual(expectedBlocks);
   });
 
@@ -142,7 +142,7 @@ describe("Digest slack notification", () => {
 
     const report = new DailySpendsReport(reportRows);
     report.makePublic("https://my.public-url.com");
-    const message = new DailySpendsDigestSlackNotification(report);
+    const message = new DailySpendsDigestMessage(report);
     expect(message.buildSlackMessage()).toEqual(expectedBlocks);
   });
 });

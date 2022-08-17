@@ -6,12 +6,12 @@ import {
   aws_events as events,
   aws_events_targets as targets,
   Stack,
-  Duration,
   Names,
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { CostAndUsageDataCatalog } from "..";
-import { DigestSlackNotificationFunction } from "./digest-slack-notification-function";
+import { AthenaErrorFunction } from "./slack/athena-error-function";
+import { DigestNotificationFunction } from "./slack/digest-notification-function";
 import { YesterdayFunction } from "./yesterday-function";
 
 /**
@@ -67,7 +67,13 @@ export class DailySpendsDigest extends Construct {
     preparedStatement: athena.CfnPreparedStatement
   ): sfn.StateMachine {
     const yesterdayFunction = new YesterdayFunction(this, "yesterday");
-    const slackMessageFunction = new DigestSlackNotificationFunction(
+    const athenaErrorFunction = new AthenaErrorFunction(this, "athena-error", {
+      environment: {
+        WEBHOOK_URL: props.slackWebHookUrl,
+      },
+    });
+
+    const slackMessageFunction = new DigestNotificationFunction(
       this,
       "digest-slack-message",
       {
@@ -82,10 +88,22 @@ export class DailySpendsDigest extends Construct {
       lambdaFunction: yesterdayFunction,
     });
 
+    const catchAthenaError = new tasks.LambdaInvoke(
+      this,
+      "Send athena error slack message",
+      {
+        lambdaFunction: athenaErrorFunction,
+        payload: sfn.TaskInput.fromObject({
+          cause: sfn.JsonPath.stringAt("$.Cause"),
+        }),
+      }
+    );
+
     const startQueryExecution = new tasks.AthenaStartQueryExecution(
       this,
       "Start Athena Query",
       {
+        integrationPattern: sfn.IntegrationPattern.RUN_JOB,
         queryString: sfn.JsonPath.stringAt(
           "States.Format('EXECUTE bill_daily_spends USING \\'{}\\'', $.Payload)".replace(
             "bill_daily_spends",
@@ -99,13 +117,7 @@ export class DailySpendsDigest extends Construct {
       }
     );
 
-    const getQueryExecution = new tasks.AthenaGetQueryExecution(
-      this,
-      "Get query result",
-      {
-        queryExecutionId: sfn.JsonPath.stringAt("$.QueryExecutionId"),
-      }
-    );
+    startQueryExecution.addCatch(catchAthenaError);
 
     const buildSlackMessage = new tasks.LambdaInvoke(
       this,
@@ -116,45 +128,14 @@ export class DailySpendsDigest extends Construct {
           resultLocation: sfn.JsonPath.stringAt(
             "$.QueryExecution.ResultConfiguration.OutputLocation"
           ),
-          queryType: "DAILY_SPENDS",
         }),
       }
-    );
-
-    const waitForQueryResult = new sfn.Wait(this, "Wait for query result", {
-      time: sfn.WaitTime.duration(Duration.seconds(5)),
-    });
-
-    const transformQueryExecution = new sfn.Pass(
-      this,
-      "Transform execution input",
-      {
-        outputPath: "$.QueryExecution",
-      }
-    );
-
-    const hasQueryFinished = new sfn.Choice(this, "Has query finished?");
-    hasQueryFinished.when(
-      sfn.Condition.stringEquals("$.QueryExecution.Status.State", "SUCCEEDED"),
-      buildSlackMessage
-    );
-    hasQueryFinished.when(
-      sfn.Condition.stringEquals("$.QueryExecution.Status.State", "FAILED"),
-      new sfn.Fail(this, "Query failed")
-    );
-    hasQueryFinished.when(
-      sfn.Condition.stringEquals("$.QueryExecution.Status.State", "CANCELLED"),
-      new sfn.Fail(this, "Query cancelled")
-    );
-    hasQueryFinished.otherwise(
-      waitForQueryResult.next(transformQueryExecution).next(getQueryExecution)
     );
 
     const stateMachine = new sfn.StateMachine(this, "workflow", {
       definition: getYesterday
         .next(startQueryExecution)
-        .next(getQueryExecution)
-        .next(hasQueryFinished),
+        .next(buildSlackMessage),
     });
 
     stateMachine.addToRolePolicy(

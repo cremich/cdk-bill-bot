@@ -4,8 +4,8 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Block } from "@slack/types";
 import { IncomingWebhook, IncomingWebhookResult } from "@slack/webhook";
 import { parse } from "csv-parse";
-import { DailySpendsDigestSlackNotification } from "./digest-slack-message";
-import { DailySpendsReport } from "./report";
+import { DailySpendsReport } from "../report";
+import { DailySpendsDigestMessage } from "./digest-message";
 
 const s3Client = new S3Client({});
 const webhook = new IncomingWebhook(process.env.WEBHOOK_URL || "");
@@ -44,9 +44,7 @@ export const handler = async (event: QueryResultEvent) => {
   const report = await DailySpendsReport.read(csvSteam);
   report.makePublic(s3Object.preSignedUrl);
 
-  const slackMessage = new DailySpendsDigestSlackNotification(
-    report
-  ).buildSlackMessage();
+  const slackMessage = new DailySpendsDigestMessage(report).buildSlackMessage();
 
   const response = await sendSlackMessage(slackMessage);
   return {

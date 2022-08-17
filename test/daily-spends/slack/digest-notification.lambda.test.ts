@@ -6,7 +6,7 @@ jest.mock("@aws-sdk/s3-request-presigner");
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { IncomingWebhook } from "@slack/webhook";
 import { mockClient } from "aws-sdk-client-mock";
-import * as lambda from "../../src/daily-spends/digest-slack-notification.lambda";
+import * as lambda from "../../../src/daily-spends/slack/digest-notification.lambda";
 
 const s3Mock = mockClient(S3Client);
 
@@ -26,7 +26,7 @@ describe("Daily spends slack notification lambda handler", () => {
 
   test("Slack message was sent", async () => {
     s3Mock.on(GetObjectCommand).resolves({
-      Body: fs.createReadStream(path.resolve(__dirname, "./daily-spends.csv")),
+      Body: fs.createReadStream(path.resolve(__dirname, "../daily-spends.csv")),
     });
 
     const sendMock = jest.fn();

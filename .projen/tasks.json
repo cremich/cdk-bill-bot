@@ -46,28 +46,49 @@
       "description": "Prepare assets",
       "steps": [
         {
-          "spawn": "bundle:daily-spends/digest-slack-notification.lambda"
+          "spawn": "bundle:daily-spends/slack/athena-error.lambda"
+        },
+        {
+          "spawn": "bundle:daily-spends/slack/digest-notification.lambda"
         },
         {
           "spawn": "bundle:daily-spends/yesterday.lambda"
         }
       ]
     },
-    "bundle:daily-spends/digest-slack-notification.lambda": {
-      "name": "bundle:daily-spends/digest-slack-notification.lambda",
-      "description": "Create a JavaScript bundle from src/daily-spends/digest-slack-notification.lambda.ts",
+    "bundle:daily-spends/slack/athena-error.lambda": {
+      "name": "bundle:daily-spends/slack/athena-error.lambda",
+      "description": "Create a JavaScript bundle from src/daily-spends/slack/athena-error.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/daily-spends/digest-slack-notification.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/digest-slack-notification.lambda/index.js\" --external:aws-sdk"
+          "exec": "esbuild --bundle src/daily-spends/slack/athena-error.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/athena-error.lambda/index.js\" --external:aws-sdk"
         }
       ]
     },
-    "bundle:daily-spends/digest-slack-notification.lambda:watch": {
-      "name": "bundle:daily-spends/digest-slack-notification.lambda:watch",
-      "description": "Continuously update the JavaScript bundle from src/daily-spends/digest-slack-notification.lambda.ts",
+    "bundle:daily-spends/slack/athena-error.lambda:watch": {
+      "name": "bundle:daily-spends/slack/athena-error.lambda:watch",
+      "description": "Continuously update the JavaScript bundle from src/daily-spends/slack/athena-error.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/daily-spends/digest-slack-notification.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/digest-slack-notification.lambda/index.js\" --external:aws-sdk --watch"
+          "exec": "esbuild --bundle src/daily-spends/slack/athena-error.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/athena-error.lambda/index.js\" --external:aws-sdk --watch"
+        }
+      ]
+    },
+    "bundle:daily-spends/slack/digest-notification.lambda": {
+      "name": "bundle:daily-spends/slack/digest-notification.lambda",
+      "description": "Create a JavaScript bundle from src/daily-spends/slack/digest-notification.lambda.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/daily-spends/slack/digest-notification.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/digest-notification.lambda/index.js\" --external:aws-sdk"
+        }
+      ]
+    },
+    "bundle:daily-spends/slack/digest-notification.lambda:watch": {
+      "name": "bundle:daily-spends/slack/digest-notification.lambda:watch",
+      "description": "Continuously update the JavaScript bundle from src/daily-spends/slack/digest-notification.lambda.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/daily-spends/slack/digest-notification.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/digest-notification.lambda/index.js\" --external:aws-sdk --watch"
         }
       ]
     },
