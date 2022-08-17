@@ -5,7 +5,7 @@ describe("Digest error notification", () => {
     const expectedBlocks = [
       {
         text: {
-          text: "Ooops...something went wrong. :cry:",
+          text: ":cry: Ooops...something went wrong.",
           type: "plain_text",
         },
         type: "header",
@@ -20,14 +20,14 @@ describe("Digest error notification", () => {
       },
       {
         text: {
-          text: "> line 12:3: Table awsdatacatalog.curcatalogdatabase.table does not exist",
+          text: "```line 12:3: Table awsdatacatalog.curcatalogdatabase.table does not exist```",
           type: "mrkdwn",
         },
         type: "section",
       },
       {
         text: {
-          text: "Please keep in mind, it can take up to *24 hours* for AWS to start delivering data to for your cost and usage reports. After delivery starts, AWS updates the AWS Cost and Usage Reports files at least once a day.",
+          text: "Please keep in mind, it can take up to *24 hours* for AWS to start delivering data for your cost and usage reports. After delivery starts, AWS updates the AWS Cost and Usage Reports files at least once a day.",
           type: "mrkdwn",
         },
         type: "section",

@@ -9,6 +9,8 @@
     "build": "npx projen build",
     "bump": "npx projen bump",
     "bundle": "npx projen bundle",
+    "bundle:daily-spends/slack/athena-error.lambda": "npx projen bundle:daily-spends/slack/athena-error.lambda",
+    "bundle:daily-spends/slack/athena-error.lambda:watch": "npx projen bundle:daily-spends/slack/athena-error.lambda:watch",
     "bundle:daily-spends/slack/digest-notification.lambda": "npx projen bundle:daily-spends/slack/digest-notification.lambda",
     "bundle:daily-spends/slack/digest-notification.lambda:watch": "npx projen bundle:daily-spends/slack/digest-notification.lambda:watch",
     "bundle:daily-spends/yesterday.lambda": "npx projen bundle:daily-spends/yesterday.lambda",

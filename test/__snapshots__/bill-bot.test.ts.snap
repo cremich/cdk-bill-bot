@@ -358,6 +358,66 @@ Object {
       },
       "Type": "AWS::Athena::WorkGroup",
     },
+    "billthebotdailyspendsdigestathenaerror020AF5E7": Object {
+      "DependsOn": Array [
+        "billthebotdailyspendsdigestathenaerrorServiceRoleC23FDAAC",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "0de909f41b2e54828203b9192ba1801ebb7fbb902075944622554e3cfec7c604.zip",
+        },
+        "Description": "src/daily-spends/slack/athena-error.lambda.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "WEBHOOK_URL": "https://hooks.slack.com/services/WORKSPACE/CHANNEL/secret",
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "billthebotdailyspendsdigestathenaerrorServiceRoleC23FDAAC",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "billthebotdailyspendsdigestathenaerrorServiceRoleC23FDAAC": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
     "billthebotdailyspendsdigestdailyspendsED869FBE": Object {
       "DependsOn": Array [
         "billthebotcostsreportcatalogworkgroupE08827C4",
@@ -597,19 +657,15 @@ Object {
                   "Arn",
                 ],
               },
-              "\\",\\"Payload.$\\":\\"$\\"}},\\"Start Athena Query\\":{\\"Next\\":\\"Get query result\\",\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              "\\",\\"Payload.$\\":\\"$\\"}},\\"Start Athena Query\\":{\\"Next\\":\\"Build slack message\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"Send athena error slack message\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::athena:startQueryExecution\\",\\"Parameters\\":{\\"QueryString.$\\":\\"States.Format('EXECUTE billthebotdailyspendsdigest80F4BFD3 USING \\\\\\\\'{}\\\\\\\\'', $.Payload)\\",\\"QueryExecutionContext\\":{\\"Database\\":\\"",
+              ":states:::athena:startQueryExecution.sync\\",\\"Parameters\\":{\\"QueryString.$\\":\\"States.Format('EXECUTE billthebotdailyspendsdigest80F4BFD3 USING \\\\\\\\'{}\\\\\\\\'', $.Payload)\\",\\"QueryExecutionContext\\":{\\"Database\\":\\"",
               Object {
                 "Ref": "billthebotcostsreportcatalogdatabase11DB4765",
               },
-              "\\"},\\"ResultConfiguration\\":{},\\"WorkGroup\\":\\"billthebotcostsreportcatalogF0071175\\"}},\\"Get query result\\":{\\"Next\\":\\"Has query finished?\\",\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
-              Object {
-                "Ref": "AWS::Partition",
-              },
-              ":states:::athena:getQueryExecution\\",\\"Parameters\\":{\\"QueryExecutionId.$\\":\\"$.QueryExecutionId\\"}},\\"Transform execution input\\":{\\"Type\\":\\"Pass\\",\\"OutputPath\\":\\"$.QueryExecution\\",\\"Next\\":\\"Get query result\\"},\\"Wait for query result\\":{\\"Type\\":\\"Wait\\",\\"Seconds\\":5,\\"Next\\":\\"Transform execution input\\"},\\"Has query finished?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.QueryExecution.Status.State\\",\\"StringEquals\\":\\"SUCCEEDED\\",\\"Next\\":\\"Build slack message\\"},{\\"Variable\\":\\"$.QueryExecution.Status.State\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"Query failed\\"},{\\"Variable\\":\\"$.QueryExecution.Status.State\\",\\"StringEquals\\":\\"CANCELLED\\",\\"Next\\":\\"Query cancelled\\"}],\\"Default\\":\\"Wait for query result\\"},\\"Build slack message\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              "\\"},\\"ResultConfiguration\\":{},\\"WorkGroup\\":\\"billthebotcostsreportcatalogF0071175\\"}},\\"Build slack message\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -620,7 +676,18 @@ Object {
                   "Arn",
                 ],
               },
-              "\\",\\"Payload\\":{\\"resultLocation.$\\":\\"$.QueryExecution.ResultConfiguration.OutputLocation\\",\\"queryType\\":\\"DAILY_SPENDS\\"}}},\\"Query failed\\":{\\"Type\\":\\"Fail\\"},\\"Query cancelled\\":{\\"Type\\":\\"Fail\\"}}}",
+              "\\",\\"Payload\\":{\\"resultLocation.$\\":\\"$.QueryExecution.ResultConfiguration.OutputLocation\\"}}},\\"Send athena error slack message\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "billthebotdailyspendsdigestathenaerror020AF5E7",
+                  "Arn",
+                ],
+              },
+              "\\",\\"Payload\\":{\\"cause.$\\":\\"$.Cause\\"}}}}}",
             ],
           ],
         },
@@ -868,16 +935,21 @@ Object {
               ],
             },
             Object {
-              "Action": "athena:getQueryExecution",
+              "Action": "lambda:InvokeFunction",
               "Effect": "Allow",
-              "Resource": "*",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "billthebotdailyspendsdigestdigestslackmessage1EA2A43F",
+                  "Arn",
+                ],
+              },
             },
             Object {
               "Action": "lambda:InvokeFunction",
               "Effect": "Allow",
               "Resource": Object {
                 "Fn::GetAtt": Array [
-                  "billthebotdailyspendsdigestdigestslackmessage1EA2A43F",
+                  "billthebotdailyspendsdigestathenaerror020AF5E7",
                   "Arn",
                 ],
               },

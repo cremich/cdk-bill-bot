@@ -100,19 +100,15 @@ describe("Daily spends digest", () => {
             {
               "Fn::GetAtt": ["dailyspendsdigestyesterday8824FADC", "Arn"],
             },
-            '","Payload.$":"$"}},"Start Athena Query":{"Next":"Get query result","Type":"Task","Resource":"arn:',
+            '","Payload.$":"$"}},"Start Athena Query":{"Next":"Build slack message","Catch":[{"ErrorEquals":["States.ALL"],"Next":"Send athena error slack message"}],"Type":"Task","Resource":"arn:',
             {
               Ref: "AWS::Partition",
             },
-            ':states:::athena:startQueryExecution","Parameters":{"QueryString.$":"States.Format(\'EXECUTE dailyspendsdigest USING \\\\\'{}\\\\\'\', $.Payload)","QueryExecutionContext":{"Database":"',
+            ':states:::athena:startQueryExecution.sync","Parameters":{"QueryString.$":"States.Format(\'EXECUTE dailyspendsdigest USING \\\\\'{}\\\\\'\', $.Payload)","QueryExecutionContext":{"Database":"',
             {
               Ref: "billbotcurcatalogdatabase633FC613",
             },
-            '"},"ResultConfiguration":{},"WorkGroup":"billbotcurcatalog"}},"Get query result":{"Next":"Has query finished?","Type":"Task","Resource":"arn:',
-            {
-              Ref: "AWS::Partition",
-            },
-            ':states:::athena:getQueryExecution","Parameters":{"QueryExecutionId.$":"$.QueryExecutionId"}},"Transform execution input":{"Type":"Pass","OutputPath":"$.QueryExecution","Next":"Get query result"},"Wait for query result":{"Type":"Wait","Seconds":5,"Next":"Transform execution input"},"Has query finished?":{"Type":"Choice","Choices":[{"Variable":"$.QueryExecution.Status.State","StringEquals":"SUCCEEDED","Next":"Build slack message"},{"Variable":"$.QueryExecution.Status.State","StringEquals":"FAILED","Next":"Query failed"},{"Variable":"$.QueryExecution.Status.State","StringEquals":"CANCELLED","Next":"Query cancelled"}],"Default":"Wait for query result"},"Build slack message":{"End":true,"Retry":[{"ErrorEquals":["Lambda.ServiceException","Lambda.AWSLambdaException","Lambda.SdkClientException"],"IntervalSeconds":2,"MaxAttempts":6,"BackoffRate":2}],"Type":"Task","Resource":"arn:',
+            '"},"ResultConfiguration":{},"WorkGroup":"billbotcurcatalog"}},"Build slack message":{"End":true,"Retry":[{"ErrorEquals":["Lambda.ServiceException","Lambda.AWSLambdaException","Lambda.SdkClientException"],"IntervalSeconds":2,"MaxAttempts":6,"BackoffRate":2}],"Type":"Task","Resource":"arn:',
             {
               Ref: "AWS::Partition",
             },
@@ -123,7 +119,15 @@ describe("Daily spends digest", () => {
                 "Arn",
               ],
             },
-            '","Payload":{"resultLocation.$":"$.QueryExecution.ResultConfiguration.OutputLocation","queryType":"DAILY_SPENDS"}}},"Query failed":{"Type":"Fail"},"Query cancelled":{"Type":"Fail"}}}',
+            '","Payload":{"resultLocation.$":"$.QueryExecution.ResultConfiguration.OutputLocation"}}},"Send athena error slack message":{"End":true,"Retry":[{"ErrorEquals":["Lambda.ServiceException","Lambda.AWSLambdaException","Lambda.SdkClientException"],"IntervalSeconds":2,"MaxAttempts":6,"BackoffRate":2}],"Type":"Task","Resource":"arn:',
+            {
+              Ref: "AWS::Partition",
+            },
+            ':states:::lambda:invoke","Parameters":{"FunctionName":"',
+            {
+              "Fn::GetAtt": ["dailyspendsdigestathenaerror639F33D8", "Arn"],
+            },
+            '","Payload":{"cause.$":"$.Cause"}}}}}',
           ],
         ],
       },

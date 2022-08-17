@@ -13,7 +13,7 @@ export class ErrorSlackNotification {
     type: "header",
     text: {
       type: "plain_text",
-      text: "Ooops...something went wrong. :cry:",
+      text: ":cry: Ooops...something went wrong.",
     },
   };
 
@@ -36,7 +36,7 @@ export class ErrorSlackNotification {
     type: "section",
     text: {
       type: "mrkdwn",
-      text: "Please keep in mind, it can take up to *24 hours* for AWS to start delivering data to for your cost and usage reports. After delivery starts, AWS updates the AWS Cost and Usage Reports files at least once a day.",
+      text: "Please keep in mind, it can take up to *24 hours* for AWS to start delivering data for your cost and usage reports. After delivery starts, AWS updates the AWS Cost and Usage Reports files at least once a day.",
     },
   };
 
@@ -86,7 +86,7 @@ export class ErrorSlackNotification {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `> ${this.cause}`,
+        text: "```" + this.cause + "```",
       },
     };
   }
