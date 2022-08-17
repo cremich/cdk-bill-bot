@@ -1,4 +1,4 @@
-import { ErrorSlackNotification } from "../../../src/daily-spends/slack/error-message";
+import { ErrorMessage } from "../../../src/daily-spends/slack/error-message";
 
 describe("Digest error notification", () => {
   test("Verify error message", async () => {
@@ -44,7 +44,7 @@ describe("Digest error notification", () => {
       },
     ];
 
-    const error = new ErrorSlackNotification(
+    const error = new ErrorMessage(
       "line 12:3: Table awsdatacatalog.curcatalogdatabase.table does not exist"
     );
     expect(error.buildSlackMessage()).toEqual(expectedBlocks);

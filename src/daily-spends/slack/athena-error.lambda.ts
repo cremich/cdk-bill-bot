@@ -2,7 +2,7 @@
 
 import { Block } from "@slack/types";
 import { IncomingWebhook, IncomingWebhookResult } from "@slack/webhook";
-import { ErrorSlackNotification } from "./error-message";
+import { ErrorMessage } from "./error-message";
 
 const webhook = new IncomingWebhook(process.env.WEBHOOK_URL || "");
 
@@ -23,9 +23,7 @@ export interface ErrorEvent {
 export const handler = async (event: ErrorEvent) => {
   const parsedErrorState = JSON.parse(event.cause).QueryExecution.Status;
   const prettyError = JSON.stringify(parsedErrorState, null, 2);
-  const slackMessage = new ErrorSlackNotification(
-    prettyError
-  ).buildSlackMessage();
+  const slackMessage = new ErrorMessage(prettyError).buildSlackMessage();
 
   const response = await sendSlackMessage(slackMessage);
   return {

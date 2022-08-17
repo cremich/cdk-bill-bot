@@ -6,7 +6,7 @@ import {
   SectionBlock,
 } from "@slack/types";
 
-export class ErrorSlackNotification {
+export class ErrorMessage {
   private readonly cause: string;
 
   private readonly headerBlock: HeaderBlock = {
