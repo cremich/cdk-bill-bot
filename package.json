@@ -72,16 +72,16 @@
     "jest-junit": "^13",
     "jsii": "^1.65.0",
     "jsii-diff": "^1.65.0",
-    "jsii-docgen": "^7.0.70",
+    "jsii-docgen": "^7.0.73",
     "jsii-pacmak": "^1.65.0",
     "json-schema": "^0.4.0",
     "lint-staged": "13.0.1",
     "npm-check-updates": "^15",
     "prettier": "^2.7.1",
-    "projen": "^0.61.17",
+    "projen": "^0.61.28",
     "standard-version": "^9",
     "ts-jest": "^27",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.2"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.1.0",
