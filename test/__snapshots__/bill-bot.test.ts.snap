@@ -367,7 +367,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "e6fe4c6f9fd83397b1c0ffca18b23298ca32b43099d3e5dc3713caf26fd0c0f0.zip",
+          "S3Key": "327033eaeb2096a874a89a530d4ea06d8e65294273a887064155d1acb4731652.zip",
         },
         "Description": "src/daily-spends/slack/athena-error.lambda.ts",
         "Environment": Object {
@@ -478,7 +478,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c1eb94604a5b637fec243047c56090a9479758bf2d9a58e242b88159a81100be.zip",
+          "S3Key": "eee554101ecca9bb48659a7316d1f2922ade5ac1b1bf33d4bebc9b167ecd3c45.zip",
         },
         "Description": "src/daily-spends/slack/digest-notification.lambda.ts",
         "Environment": Object {
