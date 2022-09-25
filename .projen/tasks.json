@@ -61,7 +61,7 @@
       "description": "Create a JavaScript bundle from src/daily-spends/slack/athena-error.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/daily-spends/slack/athena-error.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/athena-error.lambda/index.js\" --external:aws-sdk"
+          "exec": "esbuild --bundle src/daily-spends/slack/athena-error.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/athena-error.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:aws-sdk"
         }
       ]
     },
@@ -70,7 +70,7 @@
       "description": "Continuously update the JavaScript bundle from src/daily-spends/slack/athena-error.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/daily-spends/slack/athena-error.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/athena-error.lambda/index.js\" --external:aws-sdk --watch"
+          "exec": "esbuild --bundle src/daily-spends/slack/athena-error.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/athena-error.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:aws-sdk --watch"
         }
       ]
     },
@@ -79,7 +79,7 @@
       "description": "Create a JavaScript bundle from src/daily-spends/slack/digest-notification.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/daily-spends/slack/digest-notification.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/digest-notification.lambda/index.js\" --external:aws-sdk"
+          "exec": "esbuild --bundle src/daily-spends/slack/digest-notification.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/digest-notification.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:aws-sdk"
         }
       ]
     },
@@ -88,7 +88,7 @@
       "description": "Continuously update the JavaScript bundle from src/daily-spends/slack/digest-notification.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/daily-spends/slack/digest-notification.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/digest-notification.lambda/index.js\" --external:aws-sdk --watch"
+          "exec": "esbuild --bundle src/daily-spends/slack/digest-notification.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/slack/digest-notification.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:aws-sdk --watch"
         }
       ]
     },
@@ -97,7 +97,7 @@
       "description": "Create a JavaScript bundle from src/daily-spends/yesterday.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/daily-spends/yesterday.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/yesterday.lambda/index.js\" --external:aws-sdk"
+          "exec": "esbuild --bundle src/daily-spends/yesterday.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/yesterday.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:aws-sdk"
         }
       ]
     },
@@ -106,7 +106,7 @@
       "description": "Continuously update the JavaScript bundle from src/daily-spends/yesterday.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/daily-spends/yesterday.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/yesterday.lambda/index.js\" --external:aws-sdk --watch"
+          "exec": "esbuild --bundle src/daily-spends/yesterday.lambda.ts --target=\"node14\" --platform=\"node\" --outfile=\"assets/daily-spends/yesterday.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:aws-sdk --watch"
         }
       ]
     },
